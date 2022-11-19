@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+    {% from 'macros.html' import officer_jsonld_info with context %}
+    <script type="application/ld+json">
+    {
+	"@context": "https://schema.org",
+	"@type": "ItemList",
+	"url": "{{ site.page_url}}",
+	"numberOfItems": "{{ officer_group.officer_infos | length }}",
+	"itemListElement": [
+	    {% for officer in officer_group.officer_infos %}
+	    {{ officer_jsonld_info(officer) }}
+	    {% endfor %}
+	]
+    }
+    </script>
+    
+  </head>
+
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+    {% from 'macros.html' import officer_tile %}			      
+    
+      {% include 'include/header.html' %}
+      
+        <!-- Main Container -->
+        <div class="flex p-5 gap-5 pt-[120px] max-w-7xl container mx-auto">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+      
+          <main class="w-full lg:max-w-[918px] lg:ml-[190px] min-h-screen">
+	    {% include 'include/search_results.html' %}	    
+                <section class="primary">
+                  <div class=" sm:container mx-auto ">
+		    {{ breadcrumb(officer_group.crumbs) }}
+                    <div class="w-full bg-gray-200 p-3 sm:p-6">
+			<div class="mb-4 flex flex-col md:flex-row justify-between items-center">
+                          <h2 class="text-2xl text-blue-500 font-bold mb-6">{{ site.ministers|capitalize }} ({{officer_group.idx}})</h2>
+                          <div class="flex gap-1 flex-wrap text-blue-500 text-sm">
+			    {% for idx in officer_group.all_idxs %}
+			    {% if idx != officer_group.idx %}
+			    <a href="officers-{{idx}}.html"><span>{{ idx }}</span></a>
+			    {% else %}
+			    <span class="font-bold text-black">{{ idx }}</span>
+			    {% endif %}
+			    {% endfor %}
+                          </div>
+                        </div>		      
+			
+                        <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5 lg:gap-7">
+			  {% for officer in officer_group.officer_infos %}
+			  {{ officer_tile(officer) }}
+			  {% endfor %}
+                        </div>
+                    </div>
+                  </div>
+                </section>
+          </main>
+        </div>
+	{% include 'include/footer.html' %}	
+        <script src="./js/script.js"></script>
+    </body>
+</html>
