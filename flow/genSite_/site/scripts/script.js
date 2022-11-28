@@ -59,3 +59,90 @@ function readMore(button) {
 	svg_elem.setAttribute("transform", "rotate(180)");
     }
 }
+
+
+//initCarousel();
+//initPage();    
+
+//const prevButton = document.getElementById('data-carousel-prev');
+//const nextButton = document.getElementById('data-carousel-next');
+//const page_num = document.getElementById('pg_num');
+
+//console.log("Init");
+// prevButton.addEventListener('click', () => {
+//     const carousel = document.getElementById('controls-carousel').carousel;
+//     carousel.prev();
+//     position = carousel._getActiveItem().position;
+//     page_num.textContent = position + 1;
+//     console.log("Postition: " + position);
+// });
+
+// nextButton.addEventListener('click', () => {
+//     const carousel = document.getElementById('controls-carousel').carousel;
+//     carousel.next();
+//     position = carousel._getActiveItem().position;
+//     page_num.textContent = position + 1;
+//     console.log("Postition: " + position);
+// });
+
+
+function initCarousel() {
+    document.querySelectorAll('[data-carousel]').forEach(carouselEl => {
+        const interval = carouselEl.getAttribute('data-carousel-interval')
+        const slide = carouselEl.getAttribute('data-carousel') === 'slide' ? true : false
+
+        const items = []
+        let defaultPosition = 0
+        if (carouselEl.querySelectorAll('[data-carousel-item]').length) {
+            [...carouselEl.querySelectorAll('[data-carousel-item]')].map((carouselItemEl, position) => {
+                items.push({
+                    position: position,
+                    el: carouselItemEl
+                })
+
+                if (carouselItemEl.getAttribute('data-carousel-item') === 'active') {
+                    defaultPosition = position
+                }
+            })
+        }
+
+        const indicators = [];
+        if (carouselEl.querySelectorAll('[data-carousel-slide-to]').length) {
+            [...carouselEl.querySelectorAll('[data-carousel-slide-to]')].map((indicatorEl) => {
+                indicators.push({
+                    position: indicatorEl.getAttribute('data-carousel-slide-to'),
+                    el: indicatorEl
+                })
+            })
+        }
+
+        carouselEl.carousel = new Carousel(items, {
+            defaultPosition: defaultPosition,
+            indicators: {
+                items: indicators
+            },
+            interval: interval ? interval : 3000,
+        })
+
+        if (slide) {
+            carousel.cycle();
+        }
+
+        // check for controls
+        const carouselNextEl = carouselEl.querySelector('[data-carousel-next]')
+        const carouselPrevEl = carouselEl.querySelector('[data-carousel-prev]')
+
+        if (carouselNextEl) {
+            carouselNextEl.addEventListener('click', () => {
+                carousel.next()
+            })
+        }
+
+        if (carouselPrevEl) {
+            carouselPrevEl.addEventListener('click', () => {
+                carousel.prev()
+            })
+        }
+
+    })
+}

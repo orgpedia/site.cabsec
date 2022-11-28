@@ -4,6 +4,12 @@
   <head>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
     {% include 'include/head.html' %}
+
+    <script>
+      const detail_info_array = {{ order.details_json_str | safe }} ;
+      const detail_ppln_info_array = {{ order.details_ppln_json_str | safe }} ;
+    </script>
+
   </head>
   <body>
     {% from 'macros.html' import breadcrumb with context %}
@@ -19,7 +25,7 @@
 	    {% include 'include/search_results.html' %}
                 <section class="primary">
                   <div class=" sm:container mx-auto ">
-		    {{ breadcrumb(order.crumbs) }}
+		    {{ breadcrumb(order.ppln_crumbs, "d_num2") }}
 
                     <div class="p-2.5 bg-gray-200">
 		      <!-- Header for both left right panels -->
@@ -27,99 +33,80 @@
                       <div class=" flex justify-between">
 			<!-- Header for LEFT panel -->
 
-                        <div class="flex gap-2 items-center mb-1">
+                        <div class="flex gap-2 items-center mb-2">
                           <span>  <img src="images/pdf.svg"> </span>
                           <p class="text-base xs:text-xl font-bold text-blue-500 ">
-                            {{ order.order_id }}</p>
-                        </div>
-
-                        <div onclick="location.href='https://github.com/orgpedia/cabsec';" style="cursor: pointer;" class="flex items-center gap-2">
-                          <span class="text-blue-500"><a href="#">{{ site.view_on_github }}</a></span>
-                          <span>
-			    <img src="images/gh.svg">
-                          </span>
+                            {{ order.order_id }}: Detail-<span id="d_num">1</span></p>
                         </div>
                       </div>
 
                       <div
-                        class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:pr-3 lg:pl-11 text-[#333333] min-h-screen">
-                        <div class="flex-1 px-7 lg:p-0">
+                        class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:pr-3 text-[#333333] min-h-screen">
+                        <div class="flex-1 lg:pt-7 xl:p-3">
 
-                          <div class="flex justify-end items-end xl:-mt-8">
-                            <div class=" text-right ">
-                              <p class="text-sm text-[#666666]">{{ site.order_date }}: {{ order.date_str }}</p>
-                              <p class="text-sm text-[#666666]">{{ site.order_type }}:
-				<span class="text-base font-bold">{{ order.category }}</span></p>
-                            </div>
-                          </div>
-                          <p class="text-xs text-[#333333] mb-2">{{ site.page }} 1 of {{ order.num_pages }}</p>
-                          <div class="bg-[#E8E8E8] ">
-                            <div id="controls-carousel" class="relative w-full " data-carousel="static">
-                              <!-- Carousel wrapper -->
-                              <div class="relative overflow-hidden rounded-r-lg w-full min-h-screen "> <!-- changed this ->
-													    <!-- Item 1 -->
-				{% for page in order.svg_pages %}
-                                <div class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full z-10"
-                                     data-carousel-item="">
-                                  <img src="{{ page }}"
-                                       class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                  <div 
+                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+                                    <button id="prev" onclick="change_detail(-1);"
+					    class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
+                                      <svg viewBox="0 0 24 24" transform="rotate(90)" class="fill-current w-3 h-3">
+                                        <path
+                                          d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z">
+                                        </path>
+                                      </svg>
+                                    </button>
+                                    <div onclick="change_location_officer('d4');" style="cursor: pointer;"
+                                         class="flex items-start justify-between gap-2.5 flex-grow">
+                                      <img id="d1" src="{{ detail.officer_image_url }}"
+                                           class="w-[54px] h-[73px] object-cover" alt="">
+                                      <div class="flex-grow">
+                                        <h3 id="d0" class="text-lg font-bold leading-5">{{ detail.name }}</h3>
+					<div id="d2">
+					  {{ detail.short_post_str | safe }}
+					</div>
+					<div id="d3">
+					  {{ detail.long_post_str | safe }}
+					</div>
+					<div id="d4" class="hidden">
+					  {{ detail.officer_url }}
+					</div>
+                                      </div>
+                                    </div>
+                                    <button id="next" onclick="change_detail(+1);"
+                                            class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
+                                      <svg viewBox="0 0 24 24" transform="rotate(-90)" class="fill-current w-3 h-3">
+                                        <path
+                                          d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z">
+                                        </path>
+                                      </svg>
+                                    </button>
+                                  </div>
+
+
+
+			  
+                          <p class="text-xs text-[#333333] mt-2 mb-2">{{ site.page }} <span id="pg_num">1</span> of {{ order.num_pages }}</p>
+                          <div class="bg-[#E8E8E8] relative w-full lg:min-h-screen">
+                            <div class="" >
+                              <div class="">
+				
+                                <div class="relative">
+                                  <img id="pg_img" src="{{ order.svg_pages[0] }}"
+                                       class=""
                                        alt="...">
                                 </div>
-				{% if order.svg_pages|length == 1 %}
-                                <div class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full z-10"
-                                     data-carousel-item="">
-                                  <img src="{{ page }}"
-                                       class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                       alt="...">
-                                </div>
-				{% endif %}
-				{% endfor %}
                               </div>
-                              <!-- Slider controls -->
-			      {% if order.svg_pages|length > 1 %}
-                              <button type="button"
-                                      class="absolute top-0 -left-11 lg:-left-[47px] xl:-left-12 z-30 flex items-center justify-center h-full px-4  group focus:outline-none cursor-pointer"
-                                      data-carousel-prev>
-                                <span
-                                  class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
-                                  <svg viewBox="0 0 24 24"
-                                       class="fill-current w-3 h-3">
-                                    <path
-                                      d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z">
-                                    </path>
-                                  </svg>
-                                </span>
-                              </button>
-                              <button type="button"
-                                      class="absolute top-0 -right-11 lg:-right-[47px] xl:-right-[50px] z-30 flex items-center justify-center h-full px-4 group focus:outline-none cursor-pointer"
-                                      data-carousel-next="">
-                                <span
-                                  class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
-                                  <svg viewBox="0 0 24 24"
-                                       class="fill-current w-3 h-3">
-                                    <path
-                                      d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z">
-                                    </path>
-                                  </svg>
-                                </span>
-                              </button>
-			      {% endif %}
                             </div>
 
                           </div>
                         </div>
-                        <div class="flex-1 lg:pt-11 xl:p-3 ">
+                        <div class="flex-1 lg:pt-7 xl:p-3 ">
                           <div class="">
-                            <div class=" mb-2">
-                              <p class="text-xs text-[#333333]">{{ site.all_pages }}</p>
-                            </div>
-
                             <div class="bg-white">
                               <div class="">
                                 <div
                                   class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen"> <!-- changed this -->
 
-				  {% for pipe in order.detail_pplns[0] %}
+				  {% for pipe in detail_ppln %}
                                   <div
                                     class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
 
@@ -135,21 +122,21 @@
                                     <div class="flex items-start justify-between gap-2.5 bg-white flex-grow">
                                       <div class="flex-grow">
                                         <h4>
-					  <span id="{{ pipe.idx }}-0" class="font-bold">{{ pipe.object_name }}</span>
-					  <span id="{{ pipe.idx }}-1" class="text-sm"> {{ pipe.object_count }}</span>
-					  | <span id="{{ pipe.idx }}-1" class="text-sm"> {{ pipe.pipe_name }}</span>					  
+					  <span id="{{ pipe.pipe_idx }}-0" class="font-bold">{{ pipe.object_name }}</span>
+					  <span id="{{ pipe.pipe_idx }}-1" class="text-sm"> {{ pipe.object_count }}</span>
+					  | <span id="{{ pipe.pipe_idx }}-2" class="text-sm"> {{ pipe.pipe_name }}</span>
 					</h4>
 					<div class="leading-none">
-					  <code id="{{ pipe.idx }}-2" class="text-xs tracking-tighter">{{ pipe.object_html_json }}</code>
+					  <code id="{{ pipe.pipe_idx }}-3" class="text-xs tracking-tighter">{{ pipe.object_html_json }}</code>
 					</div>
-					<div data-show-more-text="" class="expand_text hidden pt-5">
+					<div class="expand_text hidden pt-5">
 					  <span class="block h-[1px] w-full bg-[#B6B6B6]"></span>
-					  <h4 id="{{ pipe.idx }}-3" class="pt-3 font-bold">{{ pipe.pipe_name }}</h4>
-					  <p id="{{ pipe.idx }}-4" class="text-sm font-bold text-[#666666]">Errors ({{ pipe.pipe_error_count }}):
-					    <span id="{{ pipe.idx }}-5" class="font-normal"> {{ pipe.pipe_error_details }}</span>
+					  <h4 id="{{ pipe.pipe_idx }}-4" class="pt-3 font-bold">{{ pipe.pipe_name }}</h4>
+					  <p class="text-sm font-bold text-[#666666]">Errors <span id="{{ pipe.pipe_idx }}-5">({{ pipe.pipe_error_count }}):</span>
+					    <span id="{{ pipe.pipe_idx }}-6" class="font-normal"> details: {{ pipe.pipe_error_details }}</span>
 					  </p>
-					  <p id="{{ pipe.idx }}-6" class="text-sm font-bold text-[#666666]">Edits ({{ pipe.pipe_edit_count }}):
-					    <span id="{{ pipe.idx }}-7" class="font-normal"> {{ pipe.pipe_edit_details }}</span>
+					  <p class="text-sm font-bold text-[#666666]">Edits <span id="{{ pipe.pipe_idx }}-7">({{ pipe.pipe_edit_count }}):</span>
+					    <span id="{{ pipe.pipe_idx }}-8" class="font-normal"> {{ pipe.pipe_edit_details }}</span>
 					  </p>
 					  <p class="text-sm  text-right">
 					    <a class="text-blue-500" href="{{ pipe.pipe_log_url }}">Logs</a> |

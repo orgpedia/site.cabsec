@@ -1,9 +1,16 @@
 
-{% macro breadcrumb(crumbs=[]) -%}
+{% macro breadcrumb(crumbs=[], last_id=-1) -%}
 <div class="flex gap-1.5 items-center justify-start text-blue-500 text-sm mb-4">
   {% for (name, href) in crumbs %}
   {% if (loop.last) %}
-  <span class="font-bold text-black">{{ name }}</span>
+      {% if (last_id == -1) %}
+      <span class="font-bold text-black">{{ name }}</span>
+      {% else %}
+      <span id="{{last_id}}" class="font-bold text-black">{{ name }}</span>
+      {% endif %}
+      
+  
+  
   {% else %}
   <a href="{{ href }}">
     <span class="cursor-pointer">{{ name }}</span>
