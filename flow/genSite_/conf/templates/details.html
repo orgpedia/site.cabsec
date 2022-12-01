@@ -2,14 +2,12 @@
 <html lang="en">
 
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
     {% include 'include/head.html' %}
 
     <script>
       const detail_info_array = {{ order.details_json_str | safe }} ;
       const detail_ppln_info_array = {{ order.details_ppln_json_str | safe }} ;
     </script>
-
   </head>
   <body>
     {% from 'macros.html' import breadcrumb with context %}
@@ -84,15 +82,16 @@
 
 
 			  
-                          <p class="text-xs text-[#333333] mt-2 mb-2">{{ site.page }} <span id="pg_num">1</span> of {{ order.num_pages }}</p>
+				  <p class="text-xs text-[#333333] mt-2 mb-2">{{ site.page }} <span id="pg_num"> {{ order.first_page_num }}</span> of {{ order.num_pages }} </p>
+				  <!-- |  Extract: <span id="extract_sub_name">detail</span> |  Pipe idx: <span id="pipe_idx">2 </span></p> -->
                           <div class="bg-[#E8E8E8] relative w-full lg:min-h-screen">
                             <div class="" >
                               <div class="">
 				
                                 <div class="relative">
-                                  <img id="pg_img" src="{{ order.svg_pages[0] }}"
+                                  <object type="image/svg+xml" id="pg_img" data="{{ order.first_page_url | replace('svgs/', 'new-svgs/') | replace('.jpg', '.svg') }}"
                                        class=""
-                                       alt="...">
+                                       alt="..."></object>
                                 </div>
                               </div>
                             </div>
@@ -108,7 +107,7 @@
 
 				  {% for pipe in detail_ppln %}
                                   <div
-                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]"  onclick="load_svg({{pipe.pipe_idx}});">
 
                                     <button onclick="readMore(this);"
                                             class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
@@ -124,10 +123,10 @@
                                         <h4>
 					  <span id="{{ pipe.pipe_idx }}-0" class="font-bold">{{ pipe.object_name }}</span>
 					  <span id="{{ pipe.pipe_idx }}-1" class="text-sm"> {{ pipe.object_count }}</span>
-					  | <span id="{{ pipe.pipe_idx }}-2" class="text-sm"> {{ pipe.pipe_name }}</span>
+					  | <span id="{{ pipe.pipe_idx }}-4" class="text-sm"> {{ pipe.pipe_name }}</span>
 					</h4>
 					<div class="leading-none">
-					  <code id="{{ pipe.pipe_idx }}-3" class="text-xs tracking-tighter">{{ pipe.object_html_json }}</code>
+					  <code id="{{ pipe.pipe_idx }}-2" class="text-xs tracking-tighter">{{ pipe.object_html_json }}</code>
 					</div>
 					<div class="expand_text hidden pt-5">
 					  <span class="block h-[1px] w-full bg-[#B6B6B6]"></span>
@@ -160,7 +159,6 @@
         </main>
 </div>
 {% include 'include/footer.html' %}
-<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
-<script src="./js/script.js"></script>
+
 </body>
 </html>

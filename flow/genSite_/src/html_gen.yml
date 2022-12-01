@@ -1,10 +1,11 @@
 images_dir: /Users/mukund/orgpedia/cabsec2/import/images
 ignore_docs: [ ]
 pipeline:
-  - name: website_language_generator
-    config:
-      conf_stub: 'website_language_generator'
-      languages: ['en']
+#  - name: website_language_generator
+#    config:
+#      conf_stub: 'website_language_generator'
+#      languages: ['en']
+
 
   - name: html_generator2
     config:

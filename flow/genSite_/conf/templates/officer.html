@@ -179,7 +179,6 @@
                                                     <img id="rt-manager-image_url-{{ loop.index0 }}" src="{{ manager_info.image_url }}"
                                                         class="w-[54px] h-[73px] object-cover" alt="{{ manager_info.full_name }}">
                                                     <div>
-                                                      <h5 class=" text-xs xs:text-sm">{{ site.manager }}</h5>
                                                       <h3 id="rt-manager-full_name-{{ loop.index0 }}" class="font-bold text-base leading-5">{{ manager_info.full_name }}</h3>
 						      <span id="rt-manager-url-{{ loop.index0 }}" class="hidden">{{ manager_info.url }}</span>
                                                         <p id="rt-manager-role-{{ loop.index0 }}" class="text-xs xs:text-sm leading-5">{{ manager_info.role }}
@@ -198,11 +197,11 @@
                                         <h2 class="text-base font-bold mb-4">{{ site.relevant_orders }}</h2>
                                         <div id="relevant-orders" class="px-4 text-base">
 					    {% for (order_id, order_category, detail_idx) in officer.first_tenure.all_orderid_detailidxs %}
-					      <div onclick="change_location('rel-{{ order_id }}')" style="cursor: pointer;" class="flex gap-4 items-center">
+					      <div onclick="change_location_detail('rel-{{ order_id }}', 'rel-{{ detail_idx }}')" style="cursor: pointer;" class="flex gap-4 items-center">
 						<span><img src="images/pdf.svg"> </span>
 						<span id="rel-{{ order_id }}" class="text-sm font-bold">{{ order_id }}</span>
-						<span class="text-sm"> [{{ detail_idx }}] Order Type:</span>
-						<span class="text-sm font-bold">{{ order_category }}</span>
+						<span id="rel-{{ detail_idx }}" class="text-sm">[{{ detail_idx }}]</span>
+						<span class="text-sm">{{ order_category }}</span>
                                               </div>
 					     {% endfor %}
 					</div>
@@ -214,6 +213,5 @@
             </main>
         </div>
 	{% include 'include/footer.html' %}
-        <script src="./js/script.js"></script>
     </body>
 </html>
