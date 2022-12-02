@@ -27,18 +27,18 @@
 {% endmacro %}
 
 
-{% macro officer_tile(officer, tenure_type='officer') %}
+{% macro officer_tile(officer, site, tenure_type='officer') %}
 <div onclick="location.href='{{ officer.url }}';" style="cursor: pointer;"
      class="bg-white p-5 flex flex-col justify-center items-center rounded-sm shadow-md">
   <img src="{{ officer.image_url }}" class="w-[75px] h-[106px]" alt="{{ officer.full_name }}">
   <div class="text-center mt-3.5">
     <h4 class="text-base">{{ officer.full_name }}</h4>
     {% if tenure_type == 'officer' %}
-    <p class="text-[11px] text-[#999999]">Tenure: {{ officer.tenure_str }}</p>
+    <p class="text-[11px] text-[#999999]">{{ site.tenure }}: {{ officer.tenure_str }}</p>
     {% elif tenure_type == 'prime' %}
-    <p class="text-[11px] text-[#999999]">Tenure: {{ officer.prime_tenure_str }}</p>
+    <p class="text-[11px] text-[#999999]">{{ site.tenure }}: {{ officer.prime_tenure_str }}</p>
     {% else %}
-    <p class="text-[11px] text-[#999999]">Tenure: {{ officer.deputy_tenure_str }}</p>
+    <p class="text-[11px] text-[#999999]">{{ site.tenure }}: {{ officer.deputy_tenure_str }}</p>
     {% endif %}
     
   </div>

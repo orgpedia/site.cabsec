@@ -246,7 +246,7 @@ const unsel_child_color="a-d";
 */
 
 const relevant_orders=`<div onclick="change_location('tenure_{idx}_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
-<span><img src="images/pdf.svg"> </span>
+<span><img src="../images/pdf.svg"> </span>
 <p id="tenure_{idx}_order_id" class="text-sm font-bold">{order_id}</p>
 <p class="text-sm"> [{detail_idx}] {order_category}</p>
 </div>`
@@ -308,7 +308,7 @@ function updatePanel(idx) {
     document.getElementById("relevant-orders").innerHTML = tenure_info.all_orderid_detailidxs.map(
         (order_info) => `
          <div onclick="change_location_detail('rel-${order_info[0]}', 'rel-${order_info[2]}')" style="cursor: pointer;" class="flex gap-4 items-center">
-             <span><img src="images/pdf.svg"> </span>
+             <span><img src="../images/pdf.svg"> </span>
              <span id="rel-${order_info[0]}" class="text-sm font-bold">${order_info[0]}</span>
              <span id="rel-${order_info[2]}" class="text-sm">[${order_info[2]}]</span>
              <span class="text-sm">${order_info[1]}</span>
@@ -318,18 +318,27 @@ function updatePanel(idx) {
 }
 
 function select_language() {
-//    console.log("select_language");
+
     var lang_menu = document.getElementById("lang_menu");
-    lang = lang_menu.options[ lang_menu.selectedIndex ].value;
+    const lang = lang_menu.options[ lang_menu.selectedIndex ].value;
     if (lang == "ignore"){
         return;
     }
+    //console.log("selected_language " + lang + " " + document.location.pathname);
+    const curr_pathname = document.location.pathname;
+    const new_pathname = '/' + lang + curr_pathname.substring(curr_pathname.indexOf('/', 1));
 
-    lang_text = lang_menu.options[ lang_menu.selectedIndex ].text;
-    document.getElementById("language-button").textContent = "";
+//    console.log("selected_language " + lang + " " + new_pathname);    
 
-    new_url  = lang + "/" + url;
-    window.location.assign(new_url);
+    document.location.pathname = new_pathname;
+
+
+
+    // lang_text = lang_menu.options[ lang_menu.selectedIndex ].text;
+    // document.getElementById("language-button").textContent = "";
+
+    // new_url  = lang + "/" + url;
+    // window.location.assign(new_url);
 };
 
 function change_location(para_id) {
@@ -346,7 +355,7 @@ function change_location_detail(para_id, detail_id) {
     order_id = para.textContent;
     console.log("Order ID: " + para_id);
 
-    detail_idx = document.getElementById(detail_id).textContent;
+    detail_idx = para.nextElementSibling.textContent;
     detail_idx = Number(detail_idx.substring(1, detail_idx.length-1))
     detail_num = String(detail_idx + 1);
 
@@ -774,12 +783,25 @@ function readMore(button) {
     expand_text.classList.toggle("hidden");
     svg_elem = button.firstElementChild;
 
+    console.log('svg_elem: ' + svg_elem);
+
     if (svg_elem.hasAttribute("transform")) {
 	svg_elem.removeAttribute("transform");
     }else {
 	svg_elem.setAttribute("transform", "rotate(180)");
     }
 }
+
+function readMore2(button) {
+    console.log("inside readMore");
+    detailElement = button.parentNode;
+    expand_text = detailElement.querySelector(".expand_text");
+    expand_text.classList.toggle("hidden");
+    img_elem = button.firstElementChild;
+    console.log('img_elem: ' + img_elem);
+    img_elem.classList.toggle("rotate-180");
+}
+
 
 
 

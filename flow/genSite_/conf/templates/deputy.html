@@ -41,7 +41,7 @@
 			      
 			      {% for prime in primes %}
 			      {% from 'macros.html' import officer_tile with context %}			      
-			      {{ officer_tile(prime, 'deputy') }}
+			      {{ officer_tile(prime, site, 'deputy') }}
 			      {% endfor %}
                             </div>
                         </div>

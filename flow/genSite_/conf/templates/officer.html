@@ -144,11 +144,11 @@
                                         </div>
                                         <div class="mt-2">
                                           <div onclick="change_location('rt-start_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
-                                                <span><img src="images/pdf.svg"> </span>
+                                                <span><img src="../images/pdf.svg"> </span>
                                                 <p id="rt-start_order_id" class="text-sm font-bold">{{ officer.first_tenure.start_order_id }}</p>
                                             </div>
                                             <div onclick="change_location('rt-end_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
-                                                <span><img src="images/pdf.svg"> </span>
+                                                <span><img src="../images/pdf.svg"> </span>
                                                 <p id="rt-end_order_id" class="text-sm font-bold">{{ officer.first_tenure.end_order_id }}</p>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                         <div id="relevant-orders" class="px-4 text-base">
 					    {% for (order_id, order_category, detail_idx) in officer.first_tenure.all_orderid_detailidxs %}
 					      <div onclick="change_location_detail('rel-{{ order_id }}', 'rel-{{ detail_idx }}')" style="cursor: pointer;" class="flex gap-4 items-center">
-						<span><img src="images/pdf.svg"> </span>
+						<span><img src="../images/pdf.svg"> </span>
 						<span id="rel-{{ order_id }}" class="text-sm font-bold">{{ order_id }}</span>
 						<span id="rel-{{ detail_idx }}" class="text-sm">[{{ detail_idx }}]</span>
 						<span class="text-sm">{{ order_category }}</span>

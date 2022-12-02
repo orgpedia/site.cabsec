@@ -46,7 +46,7 @@
 			<!-- Header for LEFT panel -->
 
                         <div class="flex gap-2 items-center mb-1">
-                          <span>  <img src="images/pdf.svg"> </span>
+                          <span>  <img src="../images/pdf.svg"> </span>
                           <p class="text-base xs:text-xl font-bold text-blue-500 ">
                             {{ order.order_id }}</p>
                         </div>
@@ -54,7 +54,7 @@
                         <div onclick="location.href='https://github.com/orgpedia/cabsec';" style="cursor: pointer;" class="flex items-center gap-2">
                           <span class="text-blue-500"><a href="#">{{ site.view_on_github }}</a></span>
                           <span>
-			    <img src="images/gh.svg">
+			    <img src="../images/gh.svg">
                           </span>
                         </div>
                       </div>
@@ -90,7 +90,7 @@
                             </span>
 			  </button>
 			    {% endif %}
-                                  <img id="pg_img" src="{{ order.first_page_url }}"
+                                  <img id="pg_img" src="../{{ order.first_page_url }}"
                                        class=""
                                        alt="...">
 				{% if order.svg_pages|length != 1 %}				  				  

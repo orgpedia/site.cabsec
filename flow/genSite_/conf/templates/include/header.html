@@ -10,7 +10,7 @@
                             </p>
                         </div>
                         <div class=" text-[45px] text-white flex flex-col items-center justify-center">
-                            <img src="images/logo.png" class="w-32 xs:w-48 lg:w-full" alt="">
+                            <img src="../images/logo.png" class="w-32 xs:w-48 lg:w-full" alt="">
                             <p
                                 class="text-xs xs:text-sm text-right -mb-3 lg:mb-0 -mr-9 xs:-mr-[70px] lg:-mr-20 xs:-mt-0.5">
                                 {{ site.ministers_of_india }}</p>
@@ -52,43 +52,43 @@
 
                     <!-- Language Select Input -->
                     <div class=" order-3 lg:order-3">
-		      <!--
                         <div class="lg:block hidden">
-                            <div class="flex items-center">
+                          <div class="flex items-center">
+			    <!--
                                 <button id="language-button"
                                     class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm text-center text-gray-50 bg-black "
                                     type="button">
                                     English
                                 </button>
+-->
 				<select name="lang_menu" id="lang_menu" class="bg-black text-gray-50 text-sm rounded-r-lg outline-none" onchange="select_language()">
-                                    <option selected="ignore">Select Language</option>
-                                    <option value="en">English</option>
-                                    <option value="as">অসমীয়া(Assamese)</option>
-                                    <option value="bn">বাংলা(Bangla)</option>
-                                    <option value="brx">बड़ो(Boro)</option>
-				    <option value="doi">डोगरी(Dogri)</option>
-				    <option value="gu">ગુજરાતી(Gujrati)</option>
-				    <option value="hi">हिन्दी(Hindi)</option>
-				    <option value="kn">ಕನ್ನಡ(Kannada)</option>
-				    <option value="ks">کوشور(Kashmiri)</opton>
-				    <option value="gom">कोंकणी(Konkani)</option>
-				    <option value="mai">मैथिली(Maithili)</option>
-				    <option value="mni">ꯃꯩꯇꯩꯂꯣꯟ(Meitei)</option>
-				    <option value="ml">മലയാളം(Malayalam)</option>
-				    <option value="mr">मराठी(Marathi)</option>
-				    <option value="ne">नेपाली(Nepali)</option>
-				    <option value="or">ଓଡ଼ିଆ(Odia)</option>
-				    <option value="pa">ਪੰਜਾਬੀ(Punjabi)</option>
-  				    <option value="sa">संस्कृत(Sanskrit)</option>
-  				    <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ(Santhali)</option>
-  				    <option value="sd">सिंधी(Sindhi)</option>
-  				    <option value="te">తెలుగు(Telgu)</option>
-  				    <option value="ta">தமிழ்(Tamil)</option>
-  				    <option value="ur">اُردُو(Urdu)</option>
+                                  <!-- <option selected="ignore">Select Language</option> -->
+                                    <option value="en" {{ site.en }}>English</option>
+                                    <option value="as" {{ site.as }}>অসমীয়া (Assamese)</option>
+                                    <option value="bn" {{ site.bn }}>বাংলা (Bangla)</option>
+                                    <option value="brx" {{ site.brx }}>बड़ो (Boro)</option>
+				    <option value="doi" {{ site.doi }}>डोगरी (Dogri)</option>
+				    <option value="gu" {{ site.gu }}>ગુજરાતી (Gujrati)</option>
+				    <option value="hi" {{ site.hi }}>हिन्दी (Hindi)</option>
+				    <option value="kn" {{ site.kn }}>ಕನ್ನಡ (Kannada)</option>
+				    <option value="ks" {{ site.ks }}>کوشور (Kashmiri)</opton>
+				    <option value="gom" {{ site.gom }}>कोंकणी (Konkani)</option>
+				    <option value="mai" {{ site.mai }}>मैथिली (Maithili)</option>
+				    <option value="mni" {{ site.mni }}>ꯃꯩꯇꯩꯂꯣꯟ (Meitei)</option>
+				    <option value="ml" {{ site.ml }}>മലയാളം (Malayalam)</option>
+				    <option value="mr" {{ site.mr }}>मराठी (Marathi)</option>
+				    <option value="ne" {{ site.ne }}>नेपाली (Nepali)</option>
+				    <option value="or" {{ site.or }}>ଓଡ଼ିଆ (Odia)</option>
+				    <option value="pa" {{ site.pa }}>ਪੰਜਾਬੀ (Punjabi)</option>
+  				    <option value="sa" {{ site.sa }}>संस्कृत (Sanskrit)</option>
+  				    <option value="sat" {{ site.sat }}>ᱥᱟᱱᱛᱟᱲᱤ (Santhali)</option>
+  				    <option value="sd" {{ site.sd }}>सिंधी (Sindhi)</option>
+  				    <option value="te" {{ site.te }}>తెలుగు (Telgu)</option>
+  				    <option value="ta" {{ site.ta }}>தமிழ் (Tamil)</option>
+  				    <option value="ur" {{ site.ur }}>اُردُو (Urdu)</option>
                                 </select>
                             </div>
                         </div>
-			-->
 
                         <!-- Search box  -->
                         <div>
