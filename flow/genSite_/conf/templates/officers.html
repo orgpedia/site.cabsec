@@ -3,21 +3,6 @@
 
   <head>
     {% include 'include/head.html' %}
-    {% from 'macros.html' import officer_jsonld_info with context %}
-    <script type="application/ld+json">
-    {
-	"@context": "https://schema.org",
-	"@type": "ItemList",
-	"url": "{{ site.page_url}}",
-	"numberOfItems": "{{ officer_group.officer_infos | length }}",
-	"itemListElement": [
-	    {% for officer in officer_group.officer_infos %}
-	    {{ officer_jsonld_info(officer) }}
-	    {% endfor %}
-	]
-    }
-    </script>
-    
   </head>
 
   <body>

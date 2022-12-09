@@ -12,14 +12,11 @@
   
   
   {% else %}
-  <a href="{{ href }}">
+  <a href="{{ href | replace(" ", "_") }}">
     <span class="cursor-pointer">{{ name }}</span>
   </a>
   <span>
-    <svg viewBox="0 0 24 24" class="fill-current w-5 h-5 text-gray-500" >
-      <path d="M10.061 19.061 17.121 12l-7.06-7.061-2.122 2.122L12.879 12l-4.94 4.939z">
-      </path>
-    </svg>
+    <img src="../i/bc.svg" class="w-5 h-5">        
   </span>
   {% endif %}
   {% endfor %}
@@ -59,14 +56,7 @@
 {% macro order_tile(order, site) %}
 <div onclick="location.href='{{order.url}}';" style="cursor: pointer;"
      class="bg-white p-5 flex flex-col justify-center items-center rounded-sm shadow-md">
-  <svg class="fill-current w-8 h-8 text-blue-500" viewBox="0 0 24 24">
-    <path
-      d="M8.267 14.68c-.184 0-.308.018-.372.036v1.178c.076.018.171.023.302.023.479 0 .774-.242.774-.651 0-.366-.254-.586-.704-.586zm3.487.012c-.2 0-.33.018-.407.036v2.61c.077.018.201.018.313.018.817.006 1.349-.444 1.349-1.396.006-.83-.479-1.268-1.255-1.268z">
-    </path>
-    <path
-      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM9.498 16.19c-.309.29-.765.42-1.296.42a2.23 2.23 0 0 1-.308-.018v1.426H7v-3.936A7.558 7.558 0 0 1 8.219 14c.557 0 .953.106 1.22.319.254.202.426.533.426.923-.001.392-.131.723-.367.948zm3.807 1.355c-.42.349-1.059.515-1.84.515-.468 0-.799-.03-1.024-.06v-3.917A7.947 7.947 0 0 1 11.66 14c.757 0 1.249.136 1.633.426.415.308.675.799.675 1.504 0 .763-.279 1.29-.663 1.615zM17 14.77h-1.532v.911H16.9v.734h-1.432v1.604h-.906V14.03H17v.74zM14 9h-1V4l5 5h-4z">
-    </path>
-  </svg>
+ <img src="../i/p2.svg">  
   <div class="text-center mt-3.5">
     <h4 class="text-base">{{order.order_id}}</h4>
     <p class="text-[11px] text-[#999999]">{{order.date_str}}</p>
@@ -91,10 +81,10 @@
 
 
 {% macro sel_tenure_panel(tenure) %}
-<div id="tenure-{{tenure.tenure_pos}}"
-     class=" bg-white border border-blue-500 lg:border-r-0 relative cursor-pointer text-sm" onclick="updatePanel({{ tenure.tenure_pos }})">
-  <div id="tenure-child-{{officer.first_tenure.tenure_pos}}"
-       class="p-2 w-full h-full min-w-[210px] relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]">
+<div id="t{{tenure.tenure_pos}}"
+     class=" bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+  <div id="tc{{officer.first_tenure.tenure_pos}}"
+       class="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>
     <p>{{ tenure.role }}</p>
   </div>
@@ -103,9 +93,9 @@
 
 
 {% macro unsel_tenure_panel(tenure) %}
-<div id="tenure-{{tenure.tenure_pos}}"
-     class=" bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 cursor-pointer text-sm text-[#333333]" onclick="updatePanel({{ tenure.tenure_pos }})">
-  <div id="tenure-child-{{tenure.tenure_pos}}"
+<div id="t{{tenure.tenure_pos}}"
+     class=" bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 text-sm text-[#333333] cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+  <div id="tc{{tenure.tenure_pos}}"
        class="p-2 w-full h-full min-w-[210px]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>
     <p>{{ tenure.role }}</p>

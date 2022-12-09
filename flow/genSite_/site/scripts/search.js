@@ -133,16 +133,20 @@ function createSearchResultBlurb(query, hit) {
 
 function showSearchResults() {
     document.querySelectorAll(".primary").forEach(
-        (ar) => (ar.classList.add("hide-element"))
+	//        (ar) => (ar.classList.add("hide-element"))
+        (ar) => (ar.classList.add("hidden"))	
     );
-    document.querySelector(".search-results").classList.remove("hide-element");
+    //document.querySelector(".search-results").classList.remove("hide-element");
+    document.querySelector(".search-results").classList.remove("hidden");
 }
 
 function hideSearchResults() {
-    document.querySelector(".search-results").classList.add("hide-element");
+    //    document.querySelector(".search-results").classList.add("hide-element");
+    document.querySelector(".search-results").classList.add("hidden");    
 
     document.querySelectorAll(".primary").forEach(
-        (ar) => (ar.classList.remove("hide-element"))
+	//        (ar) => (ar.classList.remove("hide-element"))
+        (ar) => (ar.classList.remove("hidden"))	
     );
 }
 
@@ -156,13 +160,15 @@ function handleClearSearchButtonClicked() {
 function displayErrorMessage(message) {
     document.querySelector(".search-error-message").innerHTML = message;
     document.querySelector(".search-container").classList.remove("focused");
-    document.querySelector(".search-error").classList.remove("hide-element");
+//    document.querySelector(".search-error").classList.remove("hide-element");
+    document.querySelector(".search-error").classList.remove("hidden");    
     document.querySelector(".search-error").classList.add("fade");
 }
 
 function removeAnimation() {
     this.classList.remove("fade");
-    this.classList.add("hide-element");
+//    this.classList.add("hide-element");
+    this.classList.add("hidden");    
     document.querySelector(".search-container").classList.add("focused");
 }
 
@@ -196,6 +202,7 @@ function handleMobileSearch(event)
 }
 
 initSearchIndex();
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DONE INIT." + document.readyState);
     if (document.getElementById("search-form") != null) {
@@ -221,6 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", () => handleClearSearchButtonClicked());
     }
     initPage();
+    initMobilePanels();
 
 });
 
@@ -231,28 +239,22 @@ window.addEventListener("load", function () {
 
 
 
+/*
 const sel_color="bg-white border border-blue-500 lg:border-r-0 relative cursor-pointer text-sm";
 // need a way to remove this relative only for mobile, the boxes are not linig correctly
-const sel_child_color="p-2 w-full h-full min-w-[210px] relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]";
+const sel_child_color="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]";
 const unsel_color="bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 cursor-pointer text-sm text-[#333333]";
 const unsel_child_color="p-2 w-full h-full min-w-[210px]";
+*/
 
 
-/*
 const sel_color="a-a";
 const sel_child_color="a-b";
 const unsel_color="a-c";
 const unsel_child_color="a-d";
-*/
+const grid_css="a-e";
 
-const relevant_orders=`<div onclick="change_location('tenure_{idx}_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
-<span><img src="../images/pdf.svg"> </span>
-<p id="tenure_{idx}_order_id" class="text-sm font-bold">{order_id}</p>
-<p class="text-sm"> [{detail_idx}] {order_category}</p>
-</div>`
-
-
-function updatePanel(idx) {
+function up(idx) {
     console.log("Inside udpatePane." + idx + " current: " + current_tenure_idx);
 
     if (idx == current_tenure_idx){
@@ -260,11 +262,11 @@ function updatePanel(idx) {
         return
     }
 
-    click_div = document.getElementById("tenure-" + idx);
-    click_child_div = document.getElementById("tenure-child-" + idx);
+    click_div = document.getElementById("t" + idx);
+    click_child_div = document.getElementById("tc" + idx);
 
-    prev_click_div = document.getElementById("tenure-" + current_tenure_idx);
-    prev_child_div = document.getElementById("tenure-child-" + current_tenure_idx);
+    prev_click_div = document.getElementById("t" + current_tenure_idx);
+    prev_child_div = document.getElementById("tc" + current_tenure_idx);
 
     click_div.className = sel_color;
     click_child_div.className = sel_child_color;
@@ -307,10 +309,11 @@ function updatePanel(idx) {
     //    console.log("Inside udpatePane. after looping" + idx);
     document.getElementById("relevant-orders").innerHTML = tenure_info.all_orderid_detailidxs.map(
         (order_info) => `
-         <div onclick="change_location_detail('rel-${order_info[0]}', 'rel-${order_info[2]}')" style="cursor: pointer;" class="flex gap-4 items-center">
-             <span><img src="../images/pdf.svg"> </span>
+         <div onclick="change_location_detail('rel-${order_info[0]}', 'rel-${order_info[2]}')" style="cursor: pointer;" class="${grid_css}">
+             <span><img src="../i/pdf.svg"> </span>
              <span id="rel-${order_info[0]}" class="text-sm font-bold">${order_info[0]}</span>
-             <span id="rel-${order_info[2]}" class="text-sm">[${order_info[2]}]</span>
+             <span class="hidden">[${order_info[2]}]</span>
+             <span class="text-sm">${order_info[3]}</span>
              <span class="text-sm">${order_info[1]}</span>
          </div>
          `).join("");
@@ -370,7 +373,7 @@ function change_location_officer(div_id) {
 
 
 
-function expandMinistry(idx, t_idx=-1) {
+function em(idx, t_idx=-1) {
     console.log("\tExpand Ministry: " + idx + " cur: " + current_ministry_idx + "  t_idx: " + t_idx);
     if (idx == current_ministry_idx){
         if (t_idx == -1)
@@ -381,7 +384,7 @@ function expandMinistry(idx, t_idx=-1) {
         else
         {
             console.log("\UpdatePanel top: t_idx: " + t_idx);
-            updatePanel(t_idx);
+            up(t_idx);
             return;
         }
     }
@@ -390,7 +393,8 @@ function expandMinistry(idx, t_idx=-1) {
     earlierDiv.classList.toggle("cursor-pointer");
 
     earlierButton = document.getElementById("sm" + current_ministry_idx);
-    earlierButton.removeAttribute("transform");
+    //  earlierButton.removeAttribute("transform");
+    earlierButton.classList.toggle("rotate-180");
 
     earlierDiv.nextElementSibling.classList.toggle("hidden");
 
@@ -399,16 +403,19 @@ function expandMinistry(idx, t_idx=-1) {
     ministryDiv.classList.toggle("cursor-pointer");
 
     buttonDiv = document.getElementById("sm" + idx);
-    buttonDiv.setAttribute("transform", "rotate(180)");
+    buttonDiv.classList.toggle("rotate-180");
+
+//    buttonDiv.setAttribute("transform", "rotate(180)");
     tenuresDiv = ministryDiv.nextElementSibling;
     tenuresDiv.classList.toggle("hidden");
 
     if (t_idx == -1){
-        first_tenure_idx = tenuresDiv.children[0].id.split("-")[1];
-        updatePanel(first_tenure_idx);
+	// first_tenure_idx = tenuresDiv.children[0].id.split("-")[1];
+	first_tenure_idx = tenuresDiv.children[0].id.substring(1);
+        up(first_tenure_idx);
     }else{
         console.log("\UpdatePane: t_idx: " + t_idx);
-        updatePanel(t_idx);
+        up(t_idx);
     }
 }
 
@@ -427,7 +434,7 @@ function initPage()
         return;
     }
 
-    if (document.location.href.includes("officer-")) {
+    if (document.location.href.includes("o-")) {
         const myURLObj = new URL(document.location.href);
         const tenure_idx = myURLObj.searchParams.get("tenure_idx");
         if (tenure_idx) {
@@ -439,6 +446,7 @@ function initPage()
         const detail_num = myURLObj.searchParams.get("detail_num");
         if (detail_num){
             initOrderPage(detail_num);
+            init_order_buttons();	    
         }else{
             init_order_buttons();
         }
@@ -451,6 +459,65 @@ function initPage()
             initDetailsPage(detail_num);
         }
     }
+
+
+
+
+
+
+
+    
+}
+
+
+
+function initMobilePanels()
+{
+    console.log("SETTING SEARCH BOX");
+
+//    const menuOpenBtn = document.querySelector('[data-menu-open-btn]');
+//    const menuCloseBtn = document.querySelector('[data-sidebar-close-btn]');
+//    const sidebar = document.querySelector('[data-sidebar]');
+
+
+    const menuOpenBtn = document.getElementById('mbo');
+    const menuCloseBtn = document.getElementById('mbc');
+    const sidebar = document.getElementById('mb');
+    
+    // const searchBox = document.querySelector('[data-search-box]');
+    // const searchBoxToggle = document.querySelector('[data-search-box-toggle]');
+    // const searchBoxClose = document.querySelector('[data-search-box-close]');
+
+    const searchBox = document.getElementById('sb');
+    const searchBoxToggle = document.getElementById('sbt');
+    const searchBoxClose = document.getElementById('sbc');
+    
+    
+    // Menu open 
+    menuOpenBtn.addEventListener('click', function () {
+	console.log("Inside Open Click");        
+	sidebar.classList.remove('-translate-x-full')
+	sidebar.classList.add('translate-x-0')
+    });
+    
+    // Menu close 
+    menuCloseBtn.addEventListener('click', function () {
+	console.log("Inside Close Click");    
+	sidebar.classList.remove('translate-x-0')
+	sidebar.classList.add('-translate-x-full')
+    });
+    
+    // Search Box Open 
+    searchBox.addEventListener('click', function () {
+	searchBoxToggle.classList.remove('hidden')
+	searchBoxToggle.classList.add('block')
+    });
+
+    // Search Box close 
+    searchBoxClose.addEventListener('click', function () {
+	searchBoxToggle.classList.add('hidden')
+    });
+    console.log("DONE SETTING SEARCH BOX");
 }
 
 function initSVGPage()
@@ -489,7 +556,7 @@ function initOfficerPage(tenure_idx)
     }
     console.log("init TenurePage: m_idx:" + m_idx + " idx: " + idx);
     if (m_idx != -1){
-        expandMinistry(m_idx, idx);
+        em(m_idx, idx);
     }
 }
 
@@ -692,10 +759,9 @@ function change_detail(inc)
         return;
 
     console.log("\t>d_num: " + current_detail_num + " num_details: " + num_details);
-
+    paint_pipe(current_detail_num-1, false);
     load_detail(current_detail_num + inc - 1);
     manage_buttons(current_detail_num + inc, num_details);
-    paint_pipe(current_detail_num-1, false);
     paint_pipe(current_detail_num + inc -1, true);
 
 }
@@ -716,7 +782,7 @@ function initDetailsPage(detail_num)
 
 function paint_pipe(detail_idx, add_class)
 {
-    if ((detail_idx < 0) || (detail_idx >= detail_info_array.lenght)){
+    if ((detail_idx < 0) || (detail_idx >= detail_info_array.length)){
 	return;
     }
     console.log("paint_pipe detail_idx: " + detail_idx + " add_class: " + add_class);
@@ -732,8 +798,6 @@ function paint_pipe(detail_idx, add_class)
 
 
     console.log("paint_pipe detail_idx: " + svg_info);
-
-
     for (var class_name in  svg_info) {
 	idxs_list = svg_info[class_name];
 	console.log("paint_pipe class_name: " + class_name + " idxlist: " + idxs_list);
@@ -742,7 +806,7 @@ function paint_pipe(detail_idx, add_class)
 		var i = 0;
 		for (idx of idxs){
 		    if (add_class) {
-			console.log(" ADDING INDEX" + class_name + i);
+//			console.log(" ADDING INDEX" + class_name + i);
 			svg_doc.getElementById(String(idx)).classList.add(class_name + String(i));
 		    } else {
 			svg_doc.getElementById(String(idx)).classList.remove(class_name + String(i));
@@ -753,7 +817,7 @@ function paint_pipe(detail_idx, add_class)
 	} else {
 	    for (idx of idxs_list){
 		if (add_class) {
-		    console.log(" ADDING" + idx);
+//		    console.log(" ADDING" + idx);
 		    svg_doc.getElementById(String(idx)).classList.add(class_name);
 		} else {
 		    svg_doc.getElementById(String(idx)).classList.remove(class_name);
@@ -792,10 +856,10 @@ function readMore(button) {
     }
 }
 
-function readMore2(button) {
+function xt(button) {
     console.log("inside readMore");
     detailElement = button.parentNode;
-    expand_text = detailElement.querySelector(".expand_text");
+    expand_text = detailElement.querySelector(".xt");
     expand_text.classList.toggle("hidden");
     img_elem = button.firstElementChild;
     console.log('img_elem: ' + img_elem);
@@ -844,3 +908,7 @@ function readMore2(button) {
 //     }
 //     //carousel_elem.classList.toggle('hidden');
 // }
+
+
+
+

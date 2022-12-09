@@ -3,15 +3,23 @@ from pathlib import Path
 import sys
 import string
 import time
+from os.path import relpath
+import os
 
-LEN_CUTOFF = 1500
-IGNORE_STRS_IN_CLASS = ["primary", "search", "expand_text", "group", "hidden", "cursor-pointer"]
+LEN_CUTOFF = 150
+IGNORE_STRS_IN_CLASS = ["primary", "search", " xt ", "group", " hidden", "cursor-pointer"]
 JS_CLASSES = [
     "bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer",
-    "p-2 w-full h-full min-w-[210px] relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]",
+    "p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]",
     "bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 text-sm text-[#333333] cursor-pointer",
     "p-2 w-full h-full min-w-[210px]",
+    "flex gap-4 items-center",
+    "bg-gray-200 w-full p-5 z-50 relative hidden sm:block",
+    "bg-gray-200 w-full p-5 z-50 relative hidden lg:block",
+    "duration-700 lg:hidden ease-in-out hidden",
 ]
+
+IGNORE_CLASSES = [ 'duration-700 lg:hidden ease-in-out hidden' ]
 
 INPUT_HDR ='@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n'
 
@@ -29,14 +37,28 @@ class ClassRecorder(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         for k, v in ((k, v) for k, v in attrs if k == "class"):
-            assert '\n' not in v, f'new line found in class {v}'
-            v = v.strip()
+            
+            assert '\n' not in v, f'new line found in class {v} {self.file_name}'
+            v = v.strip()            
+            #assert '  ' not in v, f'double space found in class {v} {self.file_name}'
             if not v or any(i in v for i in IGNORE_STRS_IN_CLASS + JS_CLASSES):
-                continue
+                if ("hidden" in v) and not any(i in v for i in JS_CLASSES + ['primary', 'xt', 'search']):
+                    #print(f'FOUND HIDDEN: {v}')
+                    assert v.endswith("hidden"), f"Hidden: {v}  {self.file_name}"
+                    v = v[:-len('hidden')]
+                    v = v.strip()
+                elif ("cursor-pointer" in v) and not any(i in v for i in JS_CLASSES + ['primary', 'xt', 'search']):
+                    assert v.endswith("cursor-pointer"), f"cursor-pointer: {v} {self.file_name}"
+                    v = v[:-len('cursor-pointer')]
+                    v = v.strip()                    
+                else:
+                    continue
+            assert 'search' not in v
             line_num = self.getpos()[1] - self.file_line_num
             self.class_dict.setdefault(v, []).append((self.file_name, line_num))
 
 def get_classes(input_dir):
+    print(f'Reading {input_dir}')
     class_recorder = ClassRecorder()
 
     for html_file in input_dir.glob("*.html"):
@@ -58,17 +80,28 @@ def write_components(css_path, class_pairs):
 
 
 def write_html(input_dir, output_dir, class_pairs):
+    print(f"Writing from {input_dir} -> {output_dir}")
+    
     for html_file in input_dir.glob("*.html"):
         html_contents = html_file.read_text()
         output_lines = []
         for line in html_contents.split("\n"):
-            if "class=" in line:
+            
+            if "class=" in line and ("<!-- ignore -->" not in line):
                 for (long, short) in class_pairs:
-                    line = line.replace(f'class=" {long}', f'class="{short}')
-                    line = line.replace(f'class="{long}', f'class="{short}')
-                    line = line.replace(f'class="{long} ', f'class="{short}')                                        
+                    # line = line.replace(f'class=" {long}', f'class="{short}')
+                    # line = line.replace(f'class="{long}', f'class="{short}')
+                    # line = line.replace(f'class="{long} ', f'class="{short}')
+
+                    line = line.replace(f'class=" {long}"', f'class="{short}"')
+                    line = line.replace(f'class="{long}"', f'class="{short}"')
+                    line = line.replace(f'class="{long} "', f'class="{short}"')                                        
+                    
             output_lines.append(line)
-        new_file = output_dir / html_file.name
+
+        rel_path = relpath(str(html_file), str(input_dir))
+        new_file = output_dir / Path(rel_path)
+        new_file.parent.mkdir(exist_ok=True)
         new_file.write_text("\n".join(output_lines))
 
 
@@ -77,7 +110,7 @@ if __name__ == "__main__":
     output_dir = Path(sys.argv[2])
 
     start_time = time.time()
-    long_classes = get_classes(input_dir)
+    long_classes = get_classes(input_dir / 'en') + get_classes(input_dir)
     long_classes = JS_CLASSES + long_classes  # ensure JS_CLASSES are at top
 
     get_classes_time = time.time()
@@ -94,9 +127,10 @@ if __name__ == "__main__":
 
     write_components_time = time.time()
     print(f"--- {write_components_time - get_classes_time} ---")
-    
 
-    write_html(input_dir, output_dir, class_pairs)
+    write_html(input_dir, output_dir, class_pairs)    
+    for lang in  os.environ['LANG'].split():
+        write_html(input_dir / lang, output_dir / lang, class_pairs)
     
     write_html_time = time.time()
     print(f"--- {write_html_time - write_components_time} ---")
