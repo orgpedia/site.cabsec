@@ -135,3 +135,4 @@ logs/
 .bak
 node_modules
 /import
+.DS_Store
