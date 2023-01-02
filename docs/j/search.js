@@ -16,17 +16,39 @@ function getJSON(url) {
 }
 
 function initSearchIndex() {
-    getJSON("../lunr.idx.json").then(function(data) {
+    if (document.location.href.includes('file://')) {
+	stub = 'http://0.0.0.0:8500/';
+	if (document.location.href.includes('/hi/')) {
+	    lang_stub = 'http://0.0.0.0:8500/hi/';
+	} else if (document.location.href.includes('/en/')) {
+	    lang_stub = 'http://0.0.0.0:8500/en/';
+	}
+    }else{
+	stub = "../"
+	lang_stub = "";
+    }
+    
+    getJSON(stub + "lunr.idx.json").then(function(data) {
         searchIndex = lunr.Index.load(data);
     }, function(status) {
         console.log("Unable to load the search index.");
     });
 
-    getJSON("../docs.json").then(function(data) {
+    getJSON(stub + "docs.json").then(function(data) {
         pagesIndex = data;
     }, function(status) { //error detection....
         console.log("Unable to load docs.");
     });
+    
+    if (document.location.href.includes("ministry.html")) {
+	console.log("Ministry Page " + document.location);
+	getJSON(lang_stub + "ministry_idx.json").then(function(data) {
+	    ministry = data;
+	    console.log("Num depts: " + ministry["dept"].length);
+	}, function(status) { //error detection....
+            console.log("Unable to load ministry.");
+	});
+    }
 }
 
 function getLunrSearchQuery(query) {
@@ -237,22 +259,24 @@ window.addEventListener("load", function () {
     initSVGPage();
 });
 
+//const sel_color="bg-white border border-blue-500 lg:border-r-0 relative cursor-pointer text-sm";
+
+
+const sel_color="bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative cursor-pointer text-sm"; //new
+const sel_child_color="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]"; // need a way to remove this relative only for mobile, the boxes are not linig correctly
+const unsel_color="bg-[#D9D9D9] border border-[#B8B8B8] lg:border-r-0 cursor-pointer text-sm text-[#333333]";
+const unsel_child_color="p-2 w-full h-full min-w-[210px]";
+const grid_css="flex gap-4 items-center";
 
 
 /*
-const sel_color="bg-white border border-blue-500 lg:border-r-0 relative cursor-pointer text-sm";
-// need a way to remove this relative only for mobile, the boxes are not linig correctly
-const sel_child_color="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]";
-const unsel_color="bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 cursor-pointer text-sm text-[#333333]";
-const unsel_child_color="p-2 w-full h-full min-w-[210px]";
-*/
-
-
 const sel_color="a-a";
 const sel_child_color="a-b";
 const unsel_color="a-c";
 const unsel_child_color="a-d";
 const grid_css="a-e";
+*/
+
 
 function up(idx) {
     console.log("Inside udpatePane." + idx + " current: " + current_tenure_idx);
@@ -320,28 +344,180 @@ function up(idx) {
     current_tenure_idx=idx;
 }
 
-function select_language() {
-
+function select_language()
+{
     var lang_menu = document.getElementById("lang_menu");
     const lang = lang_menu.options[ lang_menu.selectedIndex ].value;
     if (lang == "ignore"){
         return;
     }
-    //console.log("selected_language " + lang + " " + document.location.pathname);
     const curr_pathname = document.location.pathname;
     const new_pathname = '/' + lang + curr_pathname.substring(curr_pathname.indexOf('/', 1));
-
-//    console.log("selected_language " + lang + " " + new_pathname);    
-
     document.location.pathname = new_pathname;
+};
+
+/*
+
+                                  <div id="m0"
+                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+				    
+				    <div class="w-[24px]"> </div>
+				    
+                                    <div
+                                      class="flex items-start justify-between gap-2.5 bg-white flex-grow" onclick="location.href='o-Narendra_Modi.html';">
+				      
+                                      <img src="http://loksabhadocs.nic.in/mpimage/photo/4589.jpg" 
+                                           class="w-[54px] h-[73px] object-cover cursor-pointer" alt="">
+				      
+					<div class="flex-grow cursor-pointer">
+					
+                                        <h3 class="text-lg font-bold leading-5">Narendra Modi</h3>
+
+					Ministry of Personnel Public Grievances and Pensions[Prime Minister]<br>Department of Atomic Energy[Prime Minister]<br>Department of Space[Prime Minister]
+					
+                                      </div>
+                                    </div>
+                                  </div>
+*/
+
+function create_minister_panel(minister_info)
+{
+    name_idx = minister_info[0];
+    post_idxs = minister_info[1];
+
+    offi_names = ministry['offi'];
+    dept_names = ministry['dept'];
+    role_names = ministry['role'];
+
+    html_list = [];
+    post_strs = post_idxs.map( (post_idx) => `${dept_names[post_idx[0]]}[${role_names[post_idx[1]]}]`);
+
+    if (post_strs.length <= 3){
+	html_list.push('<div class="w-[24px]"> </div>');
+    } else {
+	html_list.push('<button onclick="xt(this);"');
+        html_list.push('class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">');
+	html_list.push('<img src="../i/but.svg" class="fill-current w-3 h-3">');
+	html_list.push('</button');
+    }
+    
+    short_post_str = post_strs.slice(0, 3).join("<br>");
+    long_post_str =  post_strs.slice(3, post_strs.length).join("<br>");
+
+    name = offi_names[name_idx][0];
+    url = offi_names[name_idx][1];
+    image_url = offi_names[name_idx][2];
+    
+    html_list.push(`<div class="flex items-start justify-between gap-2.5 bg-white flex-grow" onclick="location.href='${url}';">`);
+    html_list.push(`<img src="${image_url}" class="w-[54px] h-[73px] object-cover cursor-pointer" alt="${name}">`);
+    html_list.push('<div class="flex-grow cursor-pointer">');
+    html_list.push(`<h3 class="text-lg font-bold leading-5">${name}</h3>`);
+  
+    html_list.push(short_post_str);
+    if (post_strs.length > 3) {
+	html_list.push('<div class=" xt hidden">');
+	html_list.push(long_post_str);
+	html_list.push('</div>');
+    }
+    html_list.push('</div>\n</div>');
+    return html_list.join("\n");
+}
+
+function translate_num(num_str)
+{
+    const n_str = String(num_str);
+    result = [];
+    for (i = 0; i < n_str.length; i++){
+	result.push(ministry['digits'][Number(n_str.charAt(i))]);
+    }
+    return result.join("");
+}
+
+function period_str(ministry_date_idxs)
+{
+    const s_dt = ministry_date_idxs[0];
+    const e_dt = ministry_date_idxs[1];
+
+    const s_str = `${translate_num(s_dt[2])} ${ministry['months'][s_dt[1]]} ${translate_num(s_dt[0])}`;
+    const e_str = `${translate_num(e_dt[2])} ${ministry['months'][e_dt[1]]} ${translate_num(e_dt[0])}`;    
+
+    return s_str + " - " + e_str;
+}
+
+function get_date_str(dt_str)
+{
+    //console.log('Date: ' + instanceof(dt));
+    dt = new Date(dt_str);
+    dt_a = [dt.getFullYear(), dt.getMonth() + 1, dt.getDate()];
+    return `${translate_num(dt_a[2])} ${ministry['months'][dt_a[1]]} ${translate_num(dt_a[0])}`;
+}
+
+function select_date(elem)
+{
+    const milli_seconds_per_day = 1000 * 60 * 60 * 24;
+    const ministry_dt = Date.parse(elem.value);
+    const indep_dt = Date.parse('1947-08-15');
+    const mini_days = (ministry_dt - indep_dt)/milli_seconds_per_day;
+    var mini_idx = -1;
+    
+    console.log("Num days: " + ministry['date_idxs'].length + " mini Days: " + mini_days);
+    for (var idx=0; idx < ministry['date_idxs'].length; ++idx){
+	const s_day = ministry['date_idxs'][idx];
+	const e_day = ministry['date_idxs'][idx+1];
+	console.log("idx: " + idx + " start_day: " + s_day + " end_day: " + e_day);
+	if ( (s_day <= mini_days) && (mini_days < e_day) ) {
+	    mini_idx = idx;
+	    break
+	}
+    }
+    console.log('Mini Idx: ' + mini_idx);
+    console.log("Select Date: " + elem.value + " " + (ministry_dt -indep_dt)/milli_seconds_per_day);
+
+    offi_names = ministry['offi'];    
+    role_names = ministry['role'];
+    dept_names = ministry['dept'];            
+    
+    const ministry_info = ministry['ministry_idxs'][mini_idx];
+    const ministry_idx = ministry_info[0];
+    const ministry_date_idxs = ministry_info[1];
+    const deputy_pm_idxs = ministry_info[2];
+    const composition_idxs = ministry_info[3];
+    const key_info_idxs = ministry_info[4];
+    const ministers_idxs = ministry_info[5];
+
+    pm_name_idx = ministers_idxs[0][0];
+    document.getElementById("pm_image_url").src = ministry['offi'][pm_name_idx][2];
+//    document.getElementById("pm_image_url").alt = ministry['offi'][pm_name_idx][0];
+
+    
+    document.getElementById("mini").textContent = ministry['mini'][ministry_idx];
+    document.getElementById("breadcrumb").textContent = council_str + ': ' + get_date_str(ministry_dt);
 
 
+    if (deputy_pm_idxs.length > 0){
+	document.getElementById("deputy_pm_container").classList.remove("hidden");
+    }else{
+	document.getElementById("deputy_pm_container").classList.add("hidden");
+    }
+    document.getElementById("deputy_pm").innerHTML = deputy_pm_idxs.map((deputy_pm_idx) => `
+    <div> ${offi_names[deputy_pm_idx][0]}</div>`).join("\n");
+    
+    document.getElementById("composition").innerHTML = composition_idxs.map((composition_idx) => `
+     <div>${role_names[composition_idx[0]]}: ${translate_num(composition_idx[1])}</div>`).join("\n");
 
-    // lang_text = lang_menu.options[ lang_menu.selectedIndex ].text;
-    // document.getElementById("language-button").textContent = "";
+    document.getElementById("m-period_str").textContent = period_str(ministry_date_idxs);
 
-    // new_url  = lang + "/" + url;
-    // window.location.assign(new_url);
+    for (i=0; i < key_info_idxs.length; i++){
+	document.getElementById(`key-offi-${i}`).textContent = offi_names[key_info_idxs[i][0]][0];
+	document.getElementById(`key-dept-${i}`).textContent = dept_names[key_info_idxs[i][1]];
+    }
+
+    document.getElementById("details_scroll").innerHTML = ministers_idxs.map((minister_info) => `
+     <div id="m0"
+        class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+        ${create_minister_panel(minister_info)}
+     </div>`).join("\n");
+    
 };
 
 function change_location(para_id) {
@@ -389,25 +565,33 @@ function em(idx, t_idx=-1) {
         }
     }
 
+    slo_class = "order-" + slo;  //new
+    console.log("slo_class:" + slo_class);
     earlierDiv = document.getElementById("m" + current_ministry_idx);
     earlierDiv.classList.toggle("cursor-pointer");
+    earlierDiv.classList.remove(slo_class, "pt-10", "lg:pt-0", "lg:order-none"); //new
 
     earlierButton = document.getElementById("sm" + current_ministry_idx);
-    //  earlierButton.removeAttribute("transform");
     earlierButton.classList.toggle("rotate-180");
 
     earlierDiv.nextElementSibling.classList.toggle("hidden");
+    earlierDiv.nextElementSibling.classList.remove("order-10", "lg:order-none");  //new why order-10 just a big number ?
 
     current_ministry_idx = idx;
     ministryDiv = document.getElementById("m" + idx);
+    tenuresDiv = ministryDiv.nextElementSibling;
+    
+
+    
     ministryDiv.classList.toggle("cursor-pointer");
+    ministryDiv.classList.add(slo_class, "pt-10", "lg:pt-0", "lg:order-none"); //new
 
     buttonDiv = document.getElementById("sm" + idx);
     buttonDiv.classList.toggle("rotate-180");
 
-//    buttonDiv.setAttribute("transform", "rotate(180)");
-    tenuresDiv = ministryDiv.nextElementSibling;
     tenuresDiv.classList.toggle("hidden");
+    tenuresDiv.classList.add("order-last", "lg:order-none");  //new    
+
 
     if (t_idx == -1){
 	// first_tenure_idx = tenuresDiv.children[0].id.split("-")[1];
@@ -458,6 +642,8 @@ function initPage()
         if (detail_num){
             initDetailsPage(detail_num);
         }
+    } else if (document.location.href.includes("ministry.html")) {
+	console.log("Ministry Page");
     }
 
 
