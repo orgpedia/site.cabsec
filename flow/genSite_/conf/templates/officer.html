@@ -25,6 +25,8 @@
     <script>
       var current_tenure_idx=0;
       var current_ministry_idx=0;
+      var slo={{ officer.slo }}; // order for second last;
+      
       const tenure_info_array = {{ officer.tenure_json_str | safe }} ;
     </script>
     <script type="application/ld+json">{"@context": "https://schema.org","@type": "Person","image": "{{ officer.image_url }}","jobTitle": " {{ officer.key_role }}","name": "{{ officer.full_name }}","url": "{{ officer.page_url }}"}</script>
@@ -83,7 +85,7 @@
                                     <div class="flex flex-col gap-2.5">
 
 				      {% if officer.ministries.items()|length > 1%}
-                                      <div id="m0" class="flex flex-row items-center gap-2" onclick="em(0)">
+                                      <div id="m0" class="flex flex-row items-center gap-2 order-{{ officer.slo }} pt-10 lg:pt-0 lg:order-none" onclick="em(0)"> <!-- ignore -->
                                         <span 
                                           class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
 					  <img id="sm0" src="../i/but.svg" class="fill-current w-3 h-3 rotate-180">
@@ -91,13 +93,13 @@
                                         <p class="font-semibold text-base text-blue-500 border-r-0">{{ officer.first_ministry }}</p>
                                       </div>
 				      {% else %}
-                                      <div class="flex flex-row items-center gap-2 cursor-pointer">
+                                      <div id="m0" class="flex flex-row items-center gap-2 order-{{ officer.slo }} pt-10 lg:pt-0 lg:order-none cursor-pointer"> <!-- ignore -->
                                         <p class="font-semibold text-base text-blue-500 border-r-0">{{ officer.first_ministry }}</p>
                                       </div>
 				      {% endif %}
 
                                       <div
-                                        class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm">
+                                        class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm order-last lg:order-none">
 
 					{{ sel_tenure_panel(officer.first_tenure) }}
 
@@ -110,7 +112,7 @@
 
 				      {% for (ministry, tenures) in officer.ministries.items() %}
 				      {% if loop.index != 1 %}
-                                      <div id="m{{loop.index0}}" class=" flex flex-row items-center gap-2 cursor-pointer" onclick="em({{loop.index0}})">
+                                      <div id="m{{loop.index0}}" class=" flex flex-row items-center gap-2 cursor-pointer" onclick="em({{loop.index0}})"> <!-- ignore -->
                                         <span 
                                           class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
 					  <img id="sm{{loop.index0}}" src="../i/but.svg" class="fill-current w-3 h-3">					  
@@ -130,7 +132,7 @@
                             </div>
 
                             <!-- Right Side Minister -->
-                            <div class="flex-grow -mt-1.5 lg:-mt-0">
+                            <div class="flex-grow -mt-0.5 lg:-mt-0">
                                 <h2 id="rt-ministry" class="text-base font-semibold text-blue-500 mb-1.5 lg:block hidden">{{ officer.first_ministry }}</h2>
                                 <div class=" border border-blue-500 bg-white ">
                                     <div class="p-5 flex flex-col">
@@ -169,12 +171,12 @@
 					{% for manager_info in officer.first_tenure.manager_infos %}
 
 					{% if (officer.first_tenure.manager_infos_count == 2) and (loop.index0  == 1) %}
-                                        <div id="md-div-{{ loop.index0 }}" class="sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7 hidden" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')">
+                                        <div id="md-div-{{ loop.index0 }}" class="sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7 hidden" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
 					{% else %}
-                                        <div id="md-div-{{ loop.index0 }}" class=" sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')">
+                                        <div id="md-div-{{ loop.index0 }}" class=" sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
 					{% endif %}
                                                 <div
-                                                    class="flex items-center gap-2.5 p-[5px] border border-[#C3C3C3] w-full {{ manager_info.top_margin }} bg-white">
+                                                    class="flex items-center gap-2.5 p-[5px] border border-[#C3C3C3] w-full {{ manager_info.top_margin }} bg-white"> <!-- ignore CSS -->
                                                     <img id="rt-manager-image_url-{{ loop.index0 }}" src="{{ manager_info.image_url }}"
                                                         class="w-[54px] h-[73px] object-cover" alt="{{ manager_info.full_name }}">
                                                     <div>

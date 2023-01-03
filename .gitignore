@@ -136,3 +136,5 @@ logs/
 node_modules
 /import
 .DS_Store
+/flow/genSite_/conf/template/minifyHTML
+/flow/genSite_/conf/templates/minifyCSS

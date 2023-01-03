@@ -82,7 +82,7 @@
 
 {% macro sel_tenure_panel(tenure) %}
 <div id="t{{tenure.tenure_pos}}"
-     class=" bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+     class=" bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative text-sm cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
   <div id="tc{{officer.first_tenure.tenure_pos}}"
        class="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>
@@ -94,7 +94,7 @@
 
 {% macro unsel_tenure_panel(tenure) %}
 <div id="t{{tenure.tenure_pos}}"
-     class=" bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 text-sm text-[#333333] cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+     class=" bg-[#D9D9D9] border border-[#B8B8B8] lg:border-r-0 text-sm text-[#333333] cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
   <div id="tc{{tenure.tenure_pos}}"
        class="p-2 w-full h-full min-w-[210px]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>

@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./output/en/**/*.{html,js}", "conf/templates/**/*.html"],
+    content: ["./output/en/**/*.{html,js}", "./conf/templates/**/*.html", "./output/*.html", "./node_modules/tw-elements/dist/js/**/*.js"],
   theme: {
-    extend: {},
+      extend: {
+	  order: {
+              '17': '17',
+              '15': '15',
+              '13': '13'
+	  }
+      },
     screens: {
       'xs': '480px',
       // => @media (min-width: 480px) { ... }
@@ -13,7 +19,7 @@ module.exports = {
       // => @media (min-width: 768px) { ... }
 
       'lg': '1024px',
-      // => @media (min-width: 1024px) { ... }
+      // => @mediba (min-width: 1024px) { ... }
 
       'xl': '1280px',
       // => @media (min-width: 1280px) { ... }
@@ -22,5 +28,7 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     }
   },
-  plugins: [],
+  plugins: [
+    require('tw-elements/dist/plugin')
+  ],
 }

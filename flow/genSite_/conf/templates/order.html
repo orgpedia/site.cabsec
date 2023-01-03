@@ -56,10 +56,7 @@
                             </div>
                           </div>
                           <p class="text-xs text-[#333333] mb-2">{{ site.page }} <span id="pg_num"> {{ order.first_page_num }}</span>  / <span id="num_pgs">{{ order.num_pages }}</span></p>
-                          <div class="bg-[#E8E8E8] relative w-full lg:min-h-screen">
-                            <div class="">
-
-                              <div class=" ">
+                          <div class="bg-[#E8E8E8] w-full lg:min-h-screen">
                                 <div class="relative">
 
 				{% if order.images|length != 1 %}
@@ -85,8 +82,6 @@
 			      <img src="../i/but.svg" class="fill-current w-3 h-3" style="transform: rotate(270deg);">
                           </button>
 				{% endif %}
-                                </div>
-                              </div>
                               <!-- Slider controls -->
                             </div>
 

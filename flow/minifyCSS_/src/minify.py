@@ -7,17 +7,31 @@ from os.path import relpath
 import os
 
 LEN_CUTOFF = 150
+LEN_CUTOFF = 0
+
 IGNORE_STRS_IN_CLASS = ["primary", "search", " xt ", "group", " hidden", "cursor-pointer"]
+# JS_CLASSES = [
+#     "bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer",
+#     "p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]",
+#     "bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 text-sm text-[#333333] cursor-pointer",
+#     "p-2 w-full h-full min-w-[210px]",
+#     "flex gap-4 items-center",
+#     "bg-gray-200 w-full p-5 z-50 relative hidden sm:block",
+#     "bg-gray-200 p-5 z-50 relative hidden lg:block",
+#     "duration-700 lg:hidden ease-in-out hidden",
+# ]
 JS_CLASSES = [
-    "bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer",
+    "bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative text-sm cursor-pointer",
     "p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]",
-    "bg-[#D9D9D9] border border-[#B8B8B8] border-r-0 text-sm text-[#333333] cursor-pointer",
+    "bg-[#D9D9D9] border border-[#B8B8B8] lg:border-r-0 text-sm text-[#333333] cursor-pointer",
     "p-2 w-full h-full min-w-[210px]",
     "flex gap-4 items-center",
     "bg-gray-200 w-full p-5 z-50 relative hidden sm:block",
-    "bg-gray-200 w-full p-5 z-50 relative hidden lg:block",
+    "bg-gray-200 p-5 z-50 relative hidden lg:block",
     "duration-700 lg:hidden ease-in-out hidden",
 ]
+
+
 
 IGNORE_CLASSES = [ 'duration-700 lg:hidden ease-in-out hidden' ]
 
@@ -36,8 +50,8 @@ class ClassRecorder(HTMLParser):
         self.file_line_num = self.getpos()[0]
 
     def handle_starttag(self, tag, attrs):
+        
         for k, v in ((k, v) for k, v in attrs if k == "class"):
-            
             assert '\n' not in v, f'new line found in class {v} {self.file_name}'
             v = v.strip()            
             #assert '  ' not in v, f'double space found in class {v} {self.file_name}'
@@ -62,6 +76,8 @@ def get_classes(input_dir):
     class_recorder = ClassRecorder()
 
     for html_file in input_dir.glob("*.html"):
+        if '.bak' in str(html_file):
+            continue
         class_recorder.set_file_name(html_file.name)
         class_recorder.feed(html_file.read_text())
     class_recorder.close()
@@ -73,7 +89,14 @@ def get_classes(input_dir):
 
 def write_components(css_path, class_pairs):
     css_components = INPUT_HDR + "@layer components {\n"
+    css_components += "   .order-13 {\n       order: 15;\n    }"
+    css_components += "   .order-15 {\n       order: 13;\n    }"
+    css_components += "   .order-17 {\n       order: 13;\n    }"
+    css_components += "   .order-19 {\n       order: 13;\n    }"            
+
     for (long_cls, short_cls) in class_pairs:
+        if '{{' in long_cls:
+            continue
         css_components += f"  .{short_cls} {{\n    @apply {long_cls};\n  }}\n"
     css_components += "}"
     css_path.write_text(css_components)
@@ -83,6 +106,9 @@ def write_html(input_dir, output_dir, class_pairs):
     print(f"Writing from {input_dir} -> {output_dir}")
     
     for html_file in input_dir.glob("*.html"):
+        if '.bak' in str(html_file):
+            continue
+        
         html_contents = html_file.read_text()
         output_lines = []
         for line in html_contents.split("\n"):
@@ -109,8 +135,15 @@ if __name__ == "__main__":
     input_dir = Path(sys.argv[1])
     output_dir = Path(sys.argv[2])
 
+    
+    languages = os.environ['LANG'].split()
+
     start_time = time.time()
-    long_classes = get_classes(input_dir / 'en') + get_classes(input_dir)
+    if languages:
+        long_classes = get_classes(input_dir / 'en') + get_classes(input_dir)
+    else:
+        long_classes = get_classes(input_dir / 'include') + get_classes(input_dir)
+        
     long_classes = JS_CLASSES + long_classes  # ensure JS_CLASSES are at top
 
     get_classes_time = time.time()
@@ -128,9 +161,13 @@ if __name__ == "__main__":
     write_components_time = time.time()
     print(f"--- {write_components_time - get_classes_time} ---")
 
+
     write_html(input_dir, output_dir, class_pairs)    
-    for lang in  os.environ['LANG'].split():
+    for lang in  languages:
         write_html(input_dir / lang, output_dir / lang, class_pairs)
+
+    if not languages:
+        write_html(input_dir / 'include', output_dir / 'include', class_pairs)    
     
     write_html_time = time.time()
     print(f"--- {write_html_time - write_components_time} ---")
