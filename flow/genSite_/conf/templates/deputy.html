@@ -18,29 +18,29 @@
 	]
     }
   </script>
-  
+
 
   <body>
-    {% from 'macros.html' import breadcrumb with context %}			      
+    {% from 'macros.html' import breadcrumb with context %}
       {% include 'include/header.html' %}
-      
+
         <!-- Main Container -->
         <div class="flex p-5 gap-5 pt-[120px] max-w-7xl container mx-auto">
 
           <!-- Side Navigation Menu -->
 	  {% include 'include/side_bar.html' %}
-      
+
           <main class="w-full lg:max-w-[918px] lg:ml-[190px] min-h-screen">
-	    {% include 'include/search_results.html' %}	    
+	    {% include 'include/search_results.html' %}
                 <section class="primary">
-                  <div class=" sm:container mx-auto ">
+                  <div class="sm:container mx-auto">
 		    {{ breadcrumb([(site.home, 'prime.html'), (site.deputy_prime_ministers, 'deputy.html')]) }}
                         <div class="w-full bg-gray-200 p-3 sm:p-6">
                           <h2 class="text-2xl text-blue-500 font-bold mb-6">{{ site.deputy_prime_ministers | capitalize }}</h2>
                             <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5 lg:gap-7">
-			      
+
 			      {% for prime in primes %}
-			      {% from 'macros.html' import officer_tile with context %}			      
+			      {% from 'macros.html' import officer_tile with context %}
 			      {{ officer_tile(prime, site, 'deputy') }}
 			      {% endfor %}
                             </div>
@@ -49,6 +49,6 @@
                 </section>
           </main>
         </div>
-	{% include 'include/footer.html' %}	
+	{% include 'include/footer.html' %}
     </body>
 </html>

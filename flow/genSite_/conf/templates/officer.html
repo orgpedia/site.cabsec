@@ -4,7 +4,7 @@
   <head>
     {% include 'include/head.html' %}
 
-<!--    
+<!--
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@orgpedia_in" />
 	<meta name="twitter:creator" content="@mukundesh" />
@@ -13,7 +13,7 @@
 	<meta property="og:description" content="{{ site.description }}" />
 	<meta property="og:image" content=" {{ site.image_url }}" />
 	<meta property="og:locale" content="{{ site.locale }}" />
-	{% for alt_locale in site.alt_locales %}    
+	{% for alt_locale in site.alt_locales %}
 	<meta property="og:locale:alternate" content="{{ alt_locale }}" />
 	{% endfor %}
 
@@ -26,7 +26,7 @@
       var current_tenure_idx=0;
       var current_ministry_idx=0;
       var slo={{ officer.slo }}; // order for second last;
-      
+
       const tenure_info_array = {{ officer.tenure_json_str | safe }} ;
     </script>
     <script type="application/ld+json">{"@context": "https://schema.org","@type": "Person","image": "{{ officer.image_url }}","jobTitle": " {{ officer.key_role }}","name": "{{ officer.full_name }}","url": "{{ officer.page_url }}"}</script>
@@ -49,12 +49,12 @@
           <main class="w-full lg:max-w-[918px] lg:ml-[190px] min-h-screen">
 	    {% include 'include/search_results.html' %}
             <section class="primary">
-                  <div class=" sm:container mx-auto ">
+                  <div class="sm:container mx-auto">
 		    {{ breadcrumb(officer.crumbs) }}
 
-                    <div class=" p-3 lg:p-[21px] w-full bg-gray-200 min-h-screen">
+                    <div class="p-3 lg:p-[21px] w-full bg-gray-200 min-h-screen">
                         <div class="flex flex-col lg:flex-row w-full">
-                            <div class="lg:max-w-[468px] ">
+                            <div class="lg:max-w-[468px]">
                                 <div class="flex flex-col">
 
                                     <!-- Left Side Minister  -->
@@ -62,13 +62,12 @@
                                         <h2 class="text-2xl font-bold text-blue-500 mb-4">{{ officer.full_name.upper() }}</h2>
                                         <div class="flex gap-2 md:gap-5">
                                             <div class="max-w-[147px]">
-                                                <img src="{{ officer.image_url }}" alt="{{ officer.full_name }}"
-                                                    class="min-w-[120px] w-full h-[218px] lg:h-auto object-cover ">
+                                                <img src="{{ officer.image_url }}" alt="{{ officer.full_name }}" class="min-w-[120px] w-full h-[218px] lg:h-auto object-cover">
                                             </div>
                                             <div class="flex flex-col lg:max-w-[200px] text-sm text-[#333333]">
                                               <p class="text-[#666666] mb-2">{{ site.key_tenures }}: </p>
 					      {% for key_info in officer.key_infos %}
-                                                <div class=" mb-2">
+                                                <div class="mb-2">
                                                   <h4 class="font-semibold">
 						    {% if key_info.dept | length > 1 %}
 						    {{ key_info.dept }},
@@ -86,8 +85,7 @@
 
 				      {% if officer.ministries.items()|length > 1%}
                                       <div id="m0" class="flex flex-row items-center gap-2 order-{{ officer.slo }} pt-10 lg:pt-0 lg:order-none" onclick="em(0)"> <!-- ignore -->
-                                        <span 
-                                          class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
+                                        <span class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
 					  <img id="sm0" src="../i/but.svg" class="fill-current w-3 h-3 rotate-180">
                                         </span>
                                         <p class="font-semibold text-base text-blue-500 border-r-0">{{ officer.first_ministry }}</p>
@@ -98,11 +96,8 @@
                                       </div>
 				      {% endif %}
 
-                                      <div
-                                        class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm order-last lg:order-none">
-
+                                      <div class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm order-last lg:order-none">
 					{{ sel_tenure_panel(officer.first_tenure) }}
-
 					{% for tenure in officer.first_ministry_tenures %}
 					     {% if loop.index != 1 %}
 					         {{ unsel_tenure_panel(tenure) }}
@@ -112,15 +107,13 @@
 
 				      {% for (ministry, tenures) in officer.ministries.items() %}
 				      {% if loop.index != 1 %}
-                                      <div id="m{{loop.index0}}" class=" flex flex-row items-center gap-2 cursor-pointer" onclick="em({{loop.index0}})"> <!-- ignore -->
-                                        <span 
-                                          class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
-					  <img id="sm{{loop.index0}}" src="../i/but.svg" class="fill-current w-3 h-3">					  
+                                      <div id="m{{loop.index0}}" class="flex flex-row items-center gap-2 cursor-pointer" onclick="em({{loop.index0}})"> <!-- ignore -->
+                                        <span class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
+					  <img id="sm{{loop.index0}}" src="../i/but.svg" class="fill-current w-3 h-3">
                                         </span>
                                         <p class="font-semibold text-base text-blue-500 border-r-0">{{ ministry }}</p>
                                       </div>
-                                        <div
-                                          class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm hidden">
+                                        <div class="flex flex-row lg:flex-col flex-nowrap w-full overflow-hidden lg:overflow-visible overflow-x-scroll lg:overscroll-none gap-3 md:gap-5 text-sm hidden">
 					  {% for tenure in tenures %}
 					      {{ unsel_tenure_panel(tenure) }}
 					  {% endfor %}
@@ -134,9 +127,9 @@
                             <!-- Right Side Minister -->
                             <div class="flex-grow -mt-0.5 lg:-mt-0">
                                 <h2 id="rt-ministry" class="text-base font-semibold text-blue-500 mb-1.5 lg:block hidden">{{ officer.first_ministry }}</h2>
-                                <div class=" border border-blue-500 bg-white ">
+                                <div class="border border-blue-500 bg-white">
                                     <div class="p-5 flex flex-col">
-                                        <div class=" text-[#333333]">
+                                        <div class="text-[#333333]">
                                             <h5 class="text-sm">{{ site.tenure_info }}</h5>
                                             <h3 id="rt-dept" class="text-base font-bold">{{ officer.first_tenure.dept }},</h3>
                                             <h3 id="rt-role" class="text-base font-bold">{{ officer.first_tenure.role }}</h3>
@@ -144,11 +137,11 @@
                                             <a class="font-semibold text-blue-500 text-base">{{ site.orders }}</a>
                                         </div>
                                         <div class="mt-2">
-                                          <div onclick="change_location('rt-start_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
+                                          <div onclick="change_location('rt-start_order_id')" style="cursor:pointer" class="flex gap-4 items-center">
                                                 <span><img src="../i/pdf.svg"> </span>
                                                 <p id="rt-start_order_id" class="text-sm font-bold">{{ officer.first_tenure.start_order_id }}</p>
                                             </div>
-                                            <div onclick="change_location('rt-end_order_id')" style="cursor: pointer;" class="flex gap-4 items-center">
+                                            <div onclick="change_location('rt-end_order_id')" style="cursor:pointer" class="flex gap-4 items-center">
                                                 <span><img src="../i/pdf.svg"> </span>
                                                 <p id="rt-end_order_id" class="text-sm font-bold">{{ officer.first_tenure.end_order_id }}</p>
                                             </div>
@@ -158,27 +151,22 @@
                                     <span class="block h-[1px] w-full bg-[#B6B6B6]"></span>
                                     <!-- Manager Design (md) -->
                                     <div class="p-5 pb-14">
-                                      <div
-                                        class="grid gap-3 items-center relative border-l border-dashed border-black mt-10 text-[#333333]">
+                                      <div class="grid gap-3 items-center relative border-l border-dashed border-black mt-10 text-[#333333]">
 					{% if officer.first_tenure.manager_infos_count > 2 %}
-                                        <span id="md-center-line"
-					      class="absolute left-0 z-10 h-[1px] w-7 border-t border-dashed border-black "></span>
+                                        <span id="md-center-line" class="absolute left-0 z-10 h-[1px] w-7 border-t border-dashed border-black"></span>
 					{% else %}
-                                        <span id="md-center-line"
-					      class="absolute left-0 z-10 h-[1px] w-7 border-t border-dashed border-black hidden"></span>
+                                        <span id="md-center-line" class="absolute left-0 z-10 h-[1px] w-7 border-t border-dashed border-black hidden"></span>
 					{% endif %}
 
 					{% for manager_info in officer.first_tenure.manager_infos %}
 
 					{% if (officer.first_tenure.manager_infos_count == 2) and (loop.index0  == 1) %}
-                                        <div id="md-div-{{ loop.index0 }}" class="sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7 hidden" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
+                                        <div id="md-div-{{ loop.index0 }}" class="sm:max-w-[395px]{{ manager_info.border }} border-dashed border-black pl-7 hidden" style="cursor:pointer" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
 					{% else %}
-                                        <div id="md-div-{{ loop.index0 }}" class=" sm:max-w-[395px] {{ manager_info.border }} border-dashed border-black pl-7" style="cursor: pointer;" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
+                                        <div id="md-div-{{ loop.index0 }}" class="sm:max-w-[395px]{{ manager_info.border }} border-dashed border-black pl-7" style="cursor:pointer" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore CSS -->
 					{% endif %}
-                                                <div
-                                                    class="flex items-center gap-2.5 p-[5px] border border-[#C3C3C3] w-full {{ manager_info.top_margin }} bg-white"> <!-- ignore CSS -->
-                                                    <img id="rt-manager-image_url-{{ loop.index0 }}" src="{{ manager_info.image_url }}"
-                                                        class="w-[54px] h-[73px] object-cover" alt="{{ manager_info.full_name }}">
+                                                <div class="flex items-center gap-2.5 p-[5px] border border-[#C3C3C3] w-full{{ manager_info.top_margin }} bg-white"> <!-- ignore CSS -->
+                                                    <img id="rt-manager-image_url-{{ loop.index0 }}" src="{{ manager_info.image_url }}" class="w-[54px] h-[73px] object-cover" alt="{{ manager_info.full_name }}">
                                                     <div>
                                                       <h3 id="rt-manager-full_name-{{ loop.index0 }}" class="font-bold text-base leading-5">{{ manager_info.full_name }}</h3>
 						      <span id="rt-manager-url-{{ loop.index0 }}" class="hidden">{{ manager_info.url }}</span>
@@ -198,11 +186,11 @@
                                         <h2 class="text-base font-bold mb-4">{{ site.relevant_orders }}</h2>
                                         <div id="relevant-orders" class="px-4 text-base">
 					    {% for (order_id, order_category, detail_idx, date_str) in officer.first_tenure.all_orderid_detailidxs %}
-					    <div onclick="change_location_detail('rel-{{ order_id }}', 'rel-{{ detail_idx }}')" style="cursor: pointer;" class="flex gap-4 items-center">
+					    <div onclick="change_location_detail('rel-{{ order_id }}', 'rel-{{ detail_idx }}')" style="cursor:pointer" class="flex gap-4 items-center">
 						<span><img src="../i/pdf.svg"> </span>
 						<span id="rel-{{ order_id }}" class="text-sm font-bold">{{ order_id }}</span>
 						<span class="hidden">[{{ detail_idx }}]</span>
-						<span class="text-sm">{{ date_str }}</span>						
+						<span class="text-sm">{{ date_str }}</span>
 						<span class="text-sm">{{ order_category }}</span>
                                               </div>
 					     {% endfor %}

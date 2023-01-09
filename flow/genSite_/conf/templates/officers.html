@@ -7,20 +7,20 @@
 
   <body>
     {% from 'macros.html' import breadcrumb with context %}
-    {% from 'macros.html' import officer_tile %}			      
-    
+    {% from 'macros.html' import officer_tile %}
+
       {% include 'include/header.html' %}
-      
+
         <!-- Main Container -->
         <div class="flex p-5 gap-5 pt-[120px] max-w-7xl container mx-auto">
 
           <!-- Side Navigation Menu -->
 	  {% include 'include/side_bar.html' %}
-      
+
           <main class="w-full lg:max-w-[918px] lg:ml-[190px] min-h-screen">
-	    {% include 'include/search_results.html' %}	    
+	    {% include 'include/search_results.html' %}
                 <section class="primary">
-                  <div class=" sm:container mx-auto ">
+                  <div class="sm:container mx-auto">
 		    {{ breadcrumb(officer_group.crumbs) }}
                     <div class="w-full bg-gray-200 p-3 sm:p-6">
 			<div class="mb-4 flex flex-col md:flex-row justify-between items-center">
@@ -34,8 +34,8 @@
 			    {% endif %}
 			    {% endfor %}
                           </div>
-                        </div>		      
-			
+                        </div>
+
                         <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5 lg:gap-7">
 			  {% for officer in officer_group.officer_infos %}
 			  {{ officer_tile(officer, site) }}
@@ -46,6 +46,6 @@
                 </section>
           </main>
         </div>
-	{% include 'include/footer.html' %}	
+	{% include 'include/footer.html' %}
     </body>
 </html>

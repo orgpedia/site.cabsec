@@ -1,18 +1,14 @@
         <header>
-            <div
-                class="bg-black text-gray-50 h-[98px] flex top-0 items-center px-2 lg:px-4 py-2.5 border-b-[9px] border-blue-500 fixed z-50 w-full">
-                <div class="container w-full lg:max-w-[1024px] flex flex-wrap justify-between items-center mx-auto ">
+            <div class="bg-black text-gray-50 h-[98px] flex top-0 items-center px-2 lg:px-4 py-2.5 border-b-[9px] border-blue-500 fixed z-50 w-full">
+                <div class="container w-full lg:max-w-[1024px] flex flex-wrap justify-between items-center mx-auto">
                     <!-- Logo -->
                     <a href="../index.html" class="flex items-center order-2 lg:order-1">
                         <div class="w-[53px] h-[53px] bg-white flex justify-center items-center rounded-full mr-2.5">
-                            <p class="text-[30px] text-black w-[53px] h-[53px] text-center"><span
-                                    class="text-blue-500">o</span>p
-                            </p>
+                            <p class="text-[30px] text-black w-[53px] h-[53px] text-center"><span class="text-blue-500">o</span>p</p>
                         </div>
-                        <div class=" text-[45px] text-white flex flex-col items-center justify-center">
+                        <div class="text-[45px] text-white flex flex-col items-center justify-center">
                             <img src="../i/l-{{ site.lang }}.svg" class="w-32 xs:w-48 lg:w-full" alt="">
-                            <p
-                                class="text-xs xs:text-sm text-right -mb-3 lg:mb-0 -mr-9 xs:-mr-[70px] lg:-mr-20 xs:-mt-0.5">
+                            <p class="text-xs xs:text-sm text-right -mb-3 lg:mb-0 -mr-9 xs:-mr-[70px] lg:-mr-20 xs:-mt-0.5">
                                 {{ site.ministers_of_india }}</p>
                         </div>
                     </a>
@@ -21,15 +17,14 @@
                     <div class="lg:min-w-[450px] order-1 lg:order-2">
                         <div class="hidden lg:block">
                             <form id="search-form" name="searchForm" role="form" onsubmit="return false">
-                                <div class="flex items-center gap-4 ">
+                                <div class="flex items-center gap-4">
                                     <span class="text-xs whitespace-nowrap">{{ site.search }}</span>
                                     <div class="relative search-container">
-				      <i class="fa fa-search"></i>				      
+				      <i class="fa fa-search"></i>
                                         <input type="search" id="search" name="q" autocomplete="off"
                                             class="block h-[30px] lg:w-[450px] text-sm pl-4 text-gray-900 bg-white outline-none w-16"
                                             placeholder="{{ site.ministers_orders }}" required="">
-                                        <div
-                                            class="flex absolute inset-y-0 right-0.5 items-center pl-3 mr-1.5 pointer-events-none">
+                                        <div class="flex absolute inset-y-0 right-0.5 items-center pl-3 mr-1.5 pointer-events-none">
                                             <svg aria-hidden="true" class="w-5 h-5 text-blue-500 dark:text-gray-400"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,40 +38,40 @@
 
                         <!-- Toggle Menu Btn  -->
                         <button id="mbo" type="button" class="inline-flex lg:hidden">
-			  <img src="../i/b.svg" class="h-11 w-11">			  
+			  <img src="../i/b.svg" class="h-11 w-11">
                         </button>
                     </div>
 
                     <!-- Language Select Input -->
-                    <div class=" order-3 lg:order-3">
+                    <div class="order-3 lg:order-3">
                         <div class="hidden lg:block">
                           <div class="flex items-center">
 				{% if "Order Details" not in site.title %}
 				<select name="lang_menu" id="lang_menu" class="bg-black text-gray-50 text-sm rounded-r-lg outline-none" onchange="select_language()">
                                   <!-- <option selected="ignore">Select Language</option> -->
-                                    <option value="en" {{ site.en }}>English</option>
-                                    <option value="as" {{ site.as }}>অসমীয়া (Assamese)</option>
-                                    <option value="bn" {{ site.bn }}>বাংলা (Bangla)</option>
-                                    <option value="brx" {{ site.brx }}>बड़ो (Boro)</option>
-				    <option value="doi" {{ site.doi }}>डोगरी (Dogri)</option>
-				    <option value="gu" {{ site.gu }}>ગુજરાતી (Gujrati)</option>
-				    <option value="hi" {{ site.hi }}>हिन्दी (Hindi)</option>
-				    <option value="kn" {{ site.kn }}>ಕನ್ನಡ (Kannada)</option>
-				    <option value="ks" {{ site.ks }}>کوشور (Kashmiri)</option>
-				    <option value="gom" {{ site.gom }}>कोंकणी (Konkani)</option>
-				    <option value="mai" {{ site.mai }}>मैथिली (Maithili)</option>
-				    <option value="mni" {{ site.mni }}>ꯃꯩꯇꯩꯂꯣꯟ (Meitei)</option>
-				    <option value="ml" {{ site.ml }}>മലയാളം (M'lam)</option>
-				    <option value="mr" {{ site.mr }}>मराठी (Marathi)</option>
-				    <option value="ne" {{ site.ne }}>नेपाली (Nepali)</option>
-				    <option value="or" {{ site.or }}>ଓଡ଼ିଆ (Odia)</option>
-				    <option value="pa" {{ site.pa }}>ਪੰਜਾਬੀ (Punjabi)</option>
-  				    <option value="sa" {{ site.sa }}>संस्कृत (Sanskrit)</option>
-  				    <option value="sat" {{ site.sat }}>ᱥᱟᱱᱛᱟᱲᱤ (Santhali)</option>
-  				    <option value="sd" {{ site.sd }}>सिंधी (Sindhi)</option>
-  				    <option value="te" {{ site.te }}>తెలుగు (Telgu)</option>
-  				    <option value="ta" {{ site.ta }}>தமிழ் (Tamil)</option>
-  				    <option value="ur" {{ site.ur }}>اُردُو (Urdu)</option>
+                                    <option value="en"{{ site.en }}>English</option>
+                                    <option value="as"{{ site.as }}>অসমীয়া (Assamese)</option>
+                                    <option value="bn"{{ site.bn }}>বাংলা (Bangla)</option>
+                                    <option value="brx"{{ site.brx }}>बड़ो (Boro)</option>
+				    <option value="doi"{{ site.doi }}>डोगरी (Dogri)</option>
+				    <option value="gu"{{ site.gu }}>ગુજરાતી (Gujrati)</option>
+				    <option value="hi"{{ site.hi }}>हिन्दी (Hindi)</option>
+				    <option value="kn"{{ site.kn }}>ಕನ್ನಡ (Kannada)</option>
+				    <option value="ks"{{ site.ks }}>کوشور (Kashmiri)</option>
+				    <option value="gom"{{ site.gom }}>कोंकणी (Konkani)</option>
+				    <option value="mai"{{ site.mai }}>मैथिली (Maithili)</option>
+				    <option value="mni"{{ site.mni }}>ꯃꯩꯇꯩꯂꯣꯟ (Meitei)</option>
+				    <option value="ml"{{ site.ml }}>മലയാളം (M'lam)</option>
+				    <option value="mr"{{ site.mr }}>मराठी (Marathi)</option>
+				    <option value="ne"{{ site.ne }}>नेपाली (Nepali)</option>
+				    <option value="or"{{ site.or }}>ଓଡ଼ିଆ (Odia)</option>
+				    <option value="pa"{{ site.pa }}>ਪੰਜਾਬੀ (Punjabi)</option>
+  				    <option value="sa"{{ site.sa }}>संस्कृत (Sanskrit)</option>
+  				    <option value="sat"{{ site.sat }}>ᱥᱟᱱᱛᱟᱲᱤ (Santhali)</option>
+  				    <option value="sd"{{ site.sd }}>सिंधी (Sindhi)</option>
+  				    <option value="te"{{ site.te }}>తెలుగు (Telgu)</option>
+  				    <option value="ta"{{ site.ta }}>தமிழ் (Tamil)</option>
+  				    <option value="ur"{{ site.ur }}>اُردُو (Urdu)</option>
 </select>
 {% endif %}
                             </div>
@@ -85,20 +80,18 @@
                         <!-- Search box  -->
                         <div>
                           <span id="sb" class="lg:hidden">
-			    <img src="../i/sw.svg" class="w-8 h-8">			    
+			    <img src="../i/sw.svg" class="w-8 h-8">
                             </span>
 
                               <div id="sbt" class="duration-700 lg:hidden ease-in-out hidden"> <!-- ignore -->
-                                <span id="sbc"				      
-                                    class="bg-black/50 h-screen w-screen z-40 absolute top-[98px] left-0"></span>
-                                <div
-                                    class="font-sans absolute top-[98px] left-0 w-screen text-white flex items-center min-h-screen justify-center">
+                                <span id="sbc" class="bg-black/50 h-screen w-screen z-40 absolute top-[98px] left-0"></span>
+                                <div class="font-sans absolute top-[98px] left-0 w-screen text-white flex items-center min-h-screen justify-center">
                                     <div class="relative rounded overflow-hidden flex -mt-24 z-50">
                                         <input type="search" id="mobileSearch" name="mq" autocomplete="off"
                                             class="px-4 py-2 text-base outline-none text-center border-b-2 border-dashed border-t-0 border-l-0 border-r-0 focus:border-white border-white min-w-[300px] md:min-w-[400px] w-full bg-black/0"
                                             placeholder="{{ site.Search }}...">
-                                        <button class="absolute right-0 top-1 flex items-center justify-center  ">
-					  <img src="../i/sw.svg" class="w-8 h-8">					  					  
+                                        <button class="absolute right-0 top-1 flex items-center justify-center">
+					  <img src="../i/sw.svg" class="w-8 h-8">
                                         </button>
                                     </div>
                                 </div>

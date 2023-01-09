@@ -21,7 +21,7 @@
           <main class="w-full lg:max-w-[918px] lg:ml-[190px] min-h-screen">
 	    {% include 'include/search_results.html' %}
             <section class="primary">
-              <div class=" sm:container mx-auto ">
+              <div class="sm:container mx-auto">
 
 		<!-- Bread crumb not using the macro as we need to add the Select date button -->
 		<div class="flex gap-1.5 items-center justify-start relative text-blue-500 text-sm mb-4">
@@ -39,12 +39,12 @@
 
 		      <div class="datepicker absolute right-0" >
 			<input type="button"
-			       class="px-3 py-1.5 bg-blue-500 text-white w-36" data-mdb-toggle="datepicker" value="Select Date" onclick="select_date(this);" onChange="select_date(this);" />
+			       class="px-3 py-1.5 bg-blue-500 text-white w-36" data-mdb-toggle="datepicker" value="Select Date" onclick="select_date(this)" onChange="select_date(this)" />
 		      </div>
 		      -->
 
 		  <div class="absolute right-0 text-white">
-		    <input value="{{ site.select_date }}" class="px-3 py-1.5 bg-blue-500 text-white w-24 lg:w-36" type="button" min="1947-08-15" onchange="select_date(this);" onfocus="(this.type='date')">
+		    <input value="{{ site.select_date }}" class="px-3 py-1.5 bg-blue-500 text-white w-24 lg:w-36" type="text" min="1947-08-15" onchange="select_date(this)" onfocus="(this.type='date')">
 		  </div>
 
 		</div>
@@ -53,10 +53,8 @@
 
                     <div class="p-2.5 bg-gray-200">
 
-                      <div
-                        class="flex flex-col lg:flex-row lg:p-0 lg:px-4 text-[#333333] min-h-screen">
-
-                            <div class="flex-1 lg:max-w-[468px] ">
+                      <div class="flex flex-col lg:flex-row lg:p-0 lg:px-4 text-[#333333] min-h-screen">
+                            <div class="flex-1 lg:max-w-[468px]">
                                 <div class="flex flex-col">
 
                                     <!-- Left Side Minister  -->
@@ -64,13 +62,12 @@
                                         <h2 id="mini" class="text-2xl font-bold text-blue-500 mb-4">{{ cabinet.name }}</h2>
                                         <div class="flex gap-2 md:gap-5">
                                           <div class="max-w-[147px]">
-                                            <img id="pm_image_url" src="{{ cabinet.pm_image_url }}" alt="{{cabinet.pm_name }}"
-                                                 class="min-w-[120px] w-full h-[218px] lg:h-auto object-cover ">
+                                            <img id="pm_image_url" src="{{ cabinet.pm_image_url }}" alt="{{cabinet.pm_name }}" class="min-w-[120px] w-full h-[218px] lg:h-auto object-cover">
                                           </div>
                                           <div class="flex flex-col lg:max-w-[300px] text-sm text-[#333333]">
                                             <p class="text-[#666666] mb-1">{{ site.time_period }}: </p>
-                                            <div class="">
-					      <span id="m-period_str" class="text-base mb-2">{{ cabinet.period_str }}
+                                            <div>
+					      <span id="m-period_str" class="text-base mb-2">{{ cabinet.period_str }}</span>
                                             </div>
 
 					    {%if cabinet.deputy_pm_idxs | length > 0 %}
@@ -107,9 +104,8 @@
 
 
 
-<div class=" bg-white border border-blue-500  lg:border-r-0 relative  text-sm cursor-pointer" onclick="up(0)">
-  <div
-    class="p-2 bg-white focus:bg-white z-20 -bottom-4 lg:-mr-1 lg:-bottom-0 text-[#333333]">
+<div class="bg-white border border-blue-500 lg:border-r-0 relative text-sm cursor-pointer" onclick="up(0)">
+  <div class="p-2 bg-white focus:bg-white z-20 -bottom-4 lg:-mr-1 lg:-bottom-0 text-[#333333]">
     <div>
       <p class="font-semibold text-base text-blue-500 ml-2.5 my-2.5">{{ site.key_cabinet_ministers }}</p>
       <div class="flex ml-2.5 flex-row gap-10 lg:gap-20">
@@ -117,24 +113,24 @@
 	<div class="flex flex-col gap-5">
 	  <div>
 	    <h3 id="key-offi-0" class="text-base font-semibold leading-5">{{ cabinet.key_info[0][0] }}</h3>
-	    <h4 id="key-dept-0" class="text-sm ">{{ cabinet.key_info[0][1]  }}</h4>
+	    <h4 id="key-dept-0" class="text-sm">{{ cabinet.key_info[0][1]  }}</h4>
 	  </div>
 
 	  <div>
 	    <h3 id="key-offi-1" class="text-base font-bold leading-5">{{ cabinet.key_info[1][0] }}</h3>
-	    <h4 id="key-dept-1" class="text-sm ">{{ cabinet.key_info[1][1]  }}</h4>
+	    <h4 id="key-dept-1" class="text-sm">{{ cabinet.key_info[1][1]  }}</h4>
 	  </div>
 	</div>
 
 	<div class="flex flex-col gap-5">
 	  <div>
 	    <h3 id="key-offi-2" class="text-base font-bold leading-5">{{ cabinet.key_info[2][0] }}</h3>
-	    <h4 id="key-dept-2" class="text-sm ">{{ cabinet.key_info[2][1]  }}</h4>
+	    <h4 id="key-dept-2" class="text-sm">{{ cabinet.key_info[2][1]  }}</h4>
 	  </div>
 
 	  <div>
 	    <h3 id="key-offi-3" class="text-base font-bold leading-5">{{ cabinet.key_info[3][0] }}</h3>
-	    <h4 id="key-dept-3" class="text-sm ">{{ cabinet.key_info[3][1] }}</h4>
+	    <h4 id="key-dept-3" class="text-sm">{{ cabinet.key_info[3][1] }}</h4>
 	  </div>
 	</div>
       </div>
@@ -146,33 +142,27 @@
                             </div>
 
 
-                        <div class="flex-1 lg:pt-11  ">
-                          <div class="">
-                            <div class=" my-2 lg:my-0 lg:mb-2">
+                        <div class="flex-1 lg:pt-11">
+                          <div>
+                            <div class="my-2 lg:my-0 lg:mb-2">
                               <p class="text-xs text-[#333333]">{{ site.all_ministers }}</p>
                             </div>
 
                             <div class="bg-white border border-blue-500">
-                              <div class="">
-                                <div id="details_scroll"
-                                  class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen">
+                              <div>
+                                <div id="details_scroll" class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen">
 
 				  {% for minister in cabinet.ministers %}
-                                  <div id="m{{loop.index0}}"
-                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+                                  <div id="m{{loop.index0}}" class="flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
 				    {% if minister.long_post_str|length > 0 %}
-                                    <button onclick="xt(this);"
-                                            class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
+                                    <button onclick="xt(this)" class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
 				      <img src="../i/but.svg" class="fill-current w-3 h-3">
                                     </button>
 				    {% else %}
 				    <div class="w-[24px]"> </div>
 				    {% endif %}
-                                    <div
-                                      class="flex items-start justify-between gap-2.5 bg-white flex-grow" onclick="location.href='{{ minister.url | safe }}';">
-
-                                      <img src="{{ minister.image_url }}"
-                                           class="w-[54px] h-[73px] object-cover cursor-pointer" alt="">
+                                    <div class="flex items-start justify-between gap-2.5 bg-white flex-grow" onclick="location.href='{{ minister.url | safe }}'">
+                                      <img src="{{ minister.image_url }}" class="w-[54px] h-[73px] object-cover cursor-pointer">
 
 					<div class="flex-grow cursor-pointer">
 
@@ -181,7 +171,7 @@
 					{{ minister.short_post_str | safe }}
 					{% if minister.long_post_str|length > 0 %}
 					<!-- Show More Text  -->
-					<div class=" xt hidden">
+					<div class="xt hidden">
 					  {{ minister.long_post_str | safe }}
 					</div>
 					{% endif %}

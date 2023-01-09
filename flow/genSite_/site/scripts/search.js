@@ -130,29 +130,6 @@ function updateSearchResults(query, results) {
         .join("");
 }
 
-function createSearchResultBlurb(query, hit) {
-    return `
-      <table>
-        <tr>
-          <td>
-            <figure>
-              <div class="searchBox">
-                <img src="${hit.image_url}">
-              </div>
-            </figure>
-          </td>
-          <td>
-            <h4 style="font-family: Tahoma, Geneva, sans-serif;">Key Tenures</h4>
-            <ul>
-              <li><p><b>${hit.key_dept1}</b>&nbsp; ${hit.tenure_str}
-            </ul>
-          </td>
-        </tr>
-      </table>
-      <hr>
-      `;
-}
-
 function showSearchResults() {
     document.querySelectorAll(".primary").forEach(
 	//        (ar) => (ar.classList.add("hide-element"))

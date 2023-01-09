@@ -22,39 +22,30 @@
           <main class="flex-grow w-full min-h-screen lg:ml-[190px]">
 	    {% include 'include/search_results.html' %}
                 <section class="primary">
-                  <div class=" sm:container mx-auto ">
+                  <div class="sm:container mx-auto">
 		    {{ breadcrumb(order.ppln_crumbs, "d_num2") }}
 
                     <div class="p-2.5 bg-gray-200">
 		      <!-- Header for both left right panels -->
 
-                      <div class=" flex justify-between">
+                      <div class="flex justify-between">
 			<!-- Header for LEFT panel -->
 
                         <div class="flex gap-2 items-center mb-2">
                           <span>  <img src="../i/pdf.svg"> </span>
-                          <p class="text-base xs:text-xl font-bold text-blue-500 ">
+                          <p class="text-base xs:text-xl font-bold text-blue-500">
                             {{ order.order_id }}: Detail-<span id="d_num">1</span></p>
                         </div>
                       </div>
 
-                      <div
-                        class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:pr-3 text-[#333333] min-h-screen">
+                      <div class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:pr-3 text-[#333333] min-h-screen">
                         <div class="flex-1 lg:pt-7 xl:p-3">
-
-                                  <div 
-                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
-                                    <button id="prev" onclick="change_detail(-1);"
-					    class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
-
-
+                                  <div class="flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+                                    <button id="prev" onclick="change_detail(-1)" class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
 				      <img src="../i/but.svg" class="fill-current w-3 h-3 rotate-90">
-				      
                                     </button>
-                                    <div onclick="change_location_officer('d4');" style="cursor: pointer;"
-                                         class="flex items-start justify-between gap-2.5 flex-grow">
-                                      <img id="d1" src="{{ detail.officer_image_url }}"
-                                           class="w-[54px] h-[73px] object-cover" alt="">
+                                    <div onclick="change_location_officer('d4')" style="cursor:pointer" class="flex items-start justify-between gap-2.5 flex-grow">
+                                      <img id="d1" src="{{ detail.officer_image_url }}" class="w-[54px] h-[73px] object-cover">
                                       <div class="flex-grow">
                                         <h3 id="d0" class="text-lg font-bold leading-5">{{ detail.name }}</h3>
 					<div id="d2">
@@ -68,45 +59,36 @@
 					</div>
                                       </div>
                                     </div>
-                                    <button id="next" onclick="change_detail(+1);"
-                                            class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
-				      <img src="../i/but.svg" class="fill-current w-3 h-3" style="transform: rotate(270deg);">				      
+                                    <button id="next" onclick="change_detail(1)" class="w-6 h-6 flex-shrink-0 flex justify-center items-center rounded-md border border-[#666666] bg-white cursor-pointer">
+				      <img src="../i/but.svg" class="fill-current w-3 h-3" style="transform:rotate(270deg)">
                                     </button>
                                   </div>
 
 
 
-			  
+
 				  <p class="text-xs text-[#333333] mt-2 mb-2">{{ site.page }} <span id="pg_num"> {{ order.first_page_num }}</span> / {{ order.num_pages }} </p>
-				  <!-- |  Extract: <span id="extract_sub_name">detail</span> |  Pipe idx: <span id="pipe_idx">2 </span></p> -->
                           <div class="bg-[#E8E8E8] relative w-full lg:min-h-screen">
-                            <div class="" >
-                              <div class="">
-				
+                            <div>
+                              <div>
                                 <div class="relative">
-                                  <object type="image/svg+xml" id="pg_img" data="{{ order.first_svg_url }}"
-                                       class=""
-                                       alt="Page Image"></object>
+                                  <object type="image/svg+xml" id="pg_img" data="{{ order.first_svg_url }}" alt="Page Image"></object>
                                 </div>
                               </div>
                             </div>
 
                           </div>
                         </div>
-                        <div class="flex-1 lg:pt-7 xl:p-3 ">
-                          <div class="">
+                        <div class="flex-1 lg:pt-7 xl:p-3">
+                          <div>
                             <div class="bg-white">
-                              <div class="">
-                                <div
-                                  class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen"> <!-- changed this -->
-
+                              <div>
+                                <div class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen"> <!-- changed this -->
 				  {% for pipe in detail_ppln %}
-                                  <div
-                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]"  onclick="load_svg({{pipe.pipe_idx}});">
+                                  <div class="flex justify-between gap-3 p-2.5 border border-[#C3C3C3]" onclick="load_svg({{pipe.pipe_idx}})">
 
-                                    <button onclick="xt(this);"
-                                            class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
-				      <img src="../i/but.svg" class="fill-current w-3 h-3">				      
+                                    <button onclick="xt(this)" class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
+				      <img src="../i/but.svg" class="fill-current w-3 h-3">
                                     </button>
                                     <div class="flex items-start justify-between gap-2.5 bg-white flex-grow">
                                       <div class="flex-grow">
@@ -115,11 +97,11 @@
 					  <span id="{{ pipe.pipe_idx }}-1" class="text-sm"> {{ pipe.object_count }}</span>
 					  | <span id="{{ pipe.pipe_idx }}-4" class="text-sm"> {{ pipe.pipe_name }}</span>
 					</h4>
-					<div class=" leading-none">
+					<div class="leading-none">
 					  <code id="{{ pipe.pipe_idx }}-2" class="text-xs tracking-tighter">{{ pipe.object_html_json }}</code>
 					</div>
-					
-					<div class=" xt pt-5 hidden">
+
+					<div class="xt pt-5 hidden">
 					  <span class="block h-[1px] w-full bg-[#B6B6B6]"></span>
 					  <h4 id="{{ pipe.pipe_idx }}-4" class="pt-3 font-bold">{{ pipe.pipe_name }}</h4>
 					  <p class="text-sm font-bold text-[#666666]">Errors <span id="{{ pipe.pipe_idx }}-5">({{ pipe.pipe_error_count }}):</span>
@@ -128,7 +110,7 @@
 					  <p class="text-sm font-bold text-[#666666]">Edits <span id="{{ pipe.pipe_idx }}-7">({{ pipe.pipe_edit_count }}):</span>
 					    <span id="{{ pipe.pipe_idx }}-8" class="font-normal"> {{ pipe.pipe_edit_details }}</span>
 					  </p>
-					  <p class="text-sm  text-right">
+					  <p class="text-sm text-right">
 					    <a class="text-blue-500" href="{{ pipe.pipe_log_url }}">Logs</a> |
 					    <a class="text-blue-500" href="{{ pipe.pipe_config_url }}">Config</a>
 					  </p>

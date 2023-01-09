@@ -21,22 +21,22 @@
           <main class="flex-grow w-full min-h-screen lg:ml-[190px]">
 	    {% include 'include/search_results.html' %}
                 <section class="primary">
-                  <div class=" sm:container mx-auto ">
+                  <div class="sm:container mx-auto">
 		    {{ breadcrumb(order.crumbs) }}
 
                     <div class="p-2.5 bg-gray-200">
 		      <!-- Header for both left right panels -->
 
-                      <div class=" flex justify-between">
+                      <div class="flex justify-between">
 			<!-- Header for LEFT panel -->
 
                         <div class="flex gap-2 items-center mb-1">
                           <span>  <img src="../i/pdf.svg"> </span>
-                          <p class="text-base xs:text-xl font-bold text-blue-500 ">
+                          <p class="text-base xs:text-xl font-bold text-blue-500">
                             {{ order.order_id }}</p>
                         </div>
 
-                        <div onclick="location.href='https://github.com/orgpedia/cabsec';" style="cursor: pointer;" class="flex items-center gap-2">
+                        <div onclick="location.href='https://github.com/orgpedia/cabsec'" style="cursor:pointer" class="flex items-center gap-2">
                           <span class="text-blue-500"><a href="#">{{ site.view_on_github }}</a></span>
                           <span>
 			    <img src="../i/gh.svg">
@@ -44,12 +44,11 @@
                         </div>
                       </div>
 
-                      <div
-                        class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:px-4 text-[#333333] min-h-screen">
+                      <div class="flex flex-col gap-11 lg:flex-row lg:p-0 lg:px-4 text-[#333333] min-h-screen">
                         <div class="flex-1 px-7 lg:p-0 lg:pl-3">
 
                           <div class="flex justify-end items-end xl:-mt-8">
-                            <div class=" text-right ">
+                            <div class="text-right">
                               <p class="text-sm text-[#666666]">{{ site.order_date }}: {{ order.date_str }}</p>
                               <p class="text-sm text-[#666666]">{{ site.order_type }}:
 				<span class="text-base font-bold">{{ order.category }}</span></p>
@@ -60,26 +59,22 @@
                                 <div class="relative">
 
 				{% if order.images|length != 1 %}
-			  <button id="prev" onclick="change_image(-1);"
-				  class=" absolute  top-1/2 left-0 mt-3 ml-5  cursor-pointer ">
+			  <button id="prev" onclick="change_image(-1)" class="absolute top-1/2 left-0 mt-3 ml-5 cursor-pointer">
 			    <span class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
 			      <img src="../i/but.svg" class="fill-current w-3 h-3 rotate-90">
                             </span>
 			  </button>
 			  {% endif %}
-			  
-                                  <img id="pg_img" src="{{ order.first_image_url }}"
-                                       class=""
-                                       alt="Page Image">
 
-				  
+                                  <img id="pg_img" src="{{ order.first_image_url }}" alt="Page Image">
+
+
 				  {% if order.images|length != 1 %}
 
-                          <button id="next" onclick="change_image(+1);"
-				  class=" absolute  top-1/2 right-0 mt-3 mr-5 cursor-pointer ">
-                            <span
-                              class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
-			      <img src="../i/but.svg" class="fill-current w-3 h-3" style="transform: rotate(270deg);">
+                          <button id="next" onclick="change_image(1)" class="absolute top-1/2 right-0 mt-3 mr-5 cursor-pointer">
+                            <span class="h-6 w-6 bg-white flex justify-center items-center rounded-md border border-[#666666]">
+			      <img src="../i/but.svg" class="fill-current w-3 h-3" style="transform:rotate(270deg)">
+			    </span>
                           </button>
 				{% endif %}
                               <!-- Slider controls -->
@@ -87,45 +82,38 @@
 
                           </div>
                         </div>
-                        <div class="flex-1 lg:pt-11 xl:p-3 ">
-                          <div class="">
-                            <div class=" mb-2">
+                        <div class="flex-1 lg:pt-11 xl:p-3">
+                          <div>
+                            <div class="mb-2">
                               <p class="text-xs text-[#333333]">{{ site.all_pages }}</p>
                             </div>
 
                             <div class="bg-white">
-                              <div class="">
-                                <div id="details_scroll"
-                                  class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen">
+                              <div>
+                                <div id="details_scroll" class="flex flex-col gap-2.5 p-2 sm:p-5 overflow-y-scroll h-screen">
 				  {% for detail in order.details %}
-                                  <div id="d{{loop.index0}}"
-                                    class=" flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
+                                  <div id="d{{loop.index0}}" class="flex justify-between gap-3 p-2.5 border border-[#C3C3C3]">
 				    {% if detail.long_post_str|length > 0 %}
-                                    <button onclick="xt(this);"
-                                            class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
+                                    <button onclick="xt(this)" class="w-6 h-6 flex-shrink-0 bg-white flex justify-center items-center rounded-md border border-[#666666] cursor-pointer">
 				      <img src="../i/but.svg" class="fill-current w-3 h-3">
                                     </button>
 				    {% else %}
 				    <div class="w-[24px]"> </div>
 				    {% endif %}
-                                    <div
-                                      class="flex items-start justify-between gap-2.5 bg-white flex-grow">
-				      
-                                      <img src="{{ detail.officer_image_url }}" onclick="location.href='{{ detail.officer_url }}';"
-                                           class="w-[54px] h-[73px] object-cover cursor-pointer" alt="">
-				      
+                                    <div class="flex items-start justify-between gap-2.5 bg-white flex-grow">
+                                      <img src="{{ detail.officer_image_url }}" onclick="location.href='{{ detail.officer_url }}'" class="w-[54px] h-[73px] object-cover cursor-pointer">
 				      {% if site.lang|string() == "en" %}
-                                      <div class="flex-grow cursor-pointer" onclick="location.href='{{ detail.details_url | safe }}';">
+                                      <div class="flex-grow cursor-pointer" onclick="location.href='{{ detail.details_url | safe }}'">
 					{% else %}
-					<div class="flex-grow cursor-pointer" onclick="location.href='{{ detail.officer_url | safe }}';">
+					<div class="flex-grow cursor-pointer" onclick="location.href='{{ detail.officer_url | safe }}'">
 					  {% endif %}
-					
+
                                         <h3 class="text-lg font-bold leading-5">{{ detail.name }}</h3>
 
 					{{ detail.short_post_str | safe }}
 					{% if detail.long_post_str|length > 0 %}
 					<!-- Show More Text  -->
-					<div class=" xt hidden">
+					<div class="xt hidden">
 					  {{ detail.long_post_str | safe }}
 					</div>
 					{% endif %}

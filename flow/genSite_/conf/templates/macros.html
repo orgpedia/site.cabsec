@@ -8,15 +8,15 @@
       {% else %}
       <span id="{{last_id}}" class="font-bold text-black">{{ name }}</span>
       {% endif %}
-      
-  
-  
+
+
+
   {% else %}
   <a href="{{ href | replace(" ", "_") }}">
     <span class="cursor-pointer">{{ name }}</span>
   </a>
   <span>
-    <img src="../i/bc.svg" class="w-5 h-5">        
+    <img src="../i/bc.svg" class="w-5 h-5">
   </span>
   {% endif %}
   {% endfor %}
@@ -25,7 +25,7 @@
 
 
 {% macro officer_tile(officer, site, tenure_type='officer') %}
-<div onclick="location.href='{{ officer.url }}';" style="cursor: pointer;"
+<div onclick="location.href='{{ officer.url }}';" style="cursor:pointer;"
      class="bg-white p-5 flex flex-col justify-center items-center rounded-sm shadow-md">
   <img src="{{ officer.image_url }}" class="w-[75px] h-[106px]" alt="{{ officer.full_name }}">
   <div class="text-center mt-3.5">
@@ -37,7 +37,7 @@
     {% else %}
     <p class="text-[11px] text-[#999999]">{{ site.tenure }}: {{ officer.deputy_tenure_str }}</p>
     {% endif %}
-    
+
   </div>
 </div>
 {% endmacro %}
@@ -54,20 +54,20 @@
 
 
 {% macro order_tile(order, site) %}
-<div onclick="location.href='{{order.url}}';" style="cursor: pointer;"
+<div onclick="location.href='{{order.url}}';" style="cursor:pointer;"
      class="bg-white p-5 flex flex-col justify-center items-center rounded-sm shadow-md">
- <img src="../i/p2.svg">  
+ <img src="../i/p2.svg">
   <div class="text-center mt-3.5">
     <h4 class="text-base">{{order.order_id}}</h4>
     <p class="text-[11px] text-[#999999]">{{order.date_str}}</p>
     <br>
     <p class="text-[11px] text-[#999999]">{{ site.order_type }}:</p>
     <p class="text-base">{{order.category}}</p>
-    
+
     <p class="text-[11px] text-[#999999]"># {{ site.order_details }}:</p>
     <p class="text-base">{{order.num_details}}</p>
   </div>
-</div>								
+</div>
 {% endmacro %}
 
 {% macro order_jsonld_info(order, site) %}
@@ -81,10 +81,8 @@
 
 
 {% macro sel_tenure_panel(tenure) %}
-<div id="t{{tenure.tenure_pos}}"
-     class=" bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative text-sm cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
-  <div id="tc{{officer.first_tenure.tenure_pos}}"
-       class="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]">
+<div id="t{{tenure.tenure_pos}}" class="bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative text-sm cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+  <div id="tc{{officer.first_tenure.tenure_pos}}" class="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>
     <p>{{ tenure.role }}</p>
   </div>
@@ -93,10 +91,8 @@
 
 
 {% macro unsel_tenure_panel(tenure) %}
-<div id="t{{tenure.tenure_pos}}"
-     class=" bg-[#D9D9D9] border border-[#B8B8B8] lg:border-r-0 text-sm text-[#333333] cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
-  <div id="tc{{tenure.tenure_pos}}"
-       class="p-2 w-full h-full min-w-[210px]">
+<div id="t{{tenure.tenure_pos}}" class="bg-[#D9D9D9] border border-[#B8B8B8] lg:border-r-0 text-sm text-[#333333] cursor-pointer" onclick="up({{ tenure.tenure_pos }})">
+  <div id="tc{{tenure.tenure_pos}}" class="p-2 w-full h-full min-w-[210px]">
     <h4 class="font-semibold mb-2">{{ tenure.dept }}</h4>
     <p>{{ tenure.role }}</p>
   </div>
