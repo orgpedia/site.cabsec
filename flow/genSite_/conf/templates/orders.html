@@ -27,9 +27,9 @@
                           <div class="flex gap-1 flex-wrap text-blue-500 text-sm">
 			    {% for idx in order_group.all_idxs %}
 			    {% if idx != order_group.idx %}
-			    <span><a href="orders-{{order_group.all_en_idxs[loop.index0] | replace(" ", "_")}}.html" title="{{order_group.all_ministries[loop.index0]}}">{{ idx }}</a></span> <span class="font-bold text-black"> | </span>
+			    <span><a href="orders-{{order_group.all_en_idxs[loop.index0] | replace(' ', '_')}}.html" title="{{order_group.all_ministries[loop.index0]}}">{{ idx }}</a></span> <span class="font-bold text-black">|</span>
 			    {% else %}
-			    <span class="font-bold text-black">{{ idx }} | </span>
+			    <span class="font-bold text-black">{{ idx }} |</span>
 			    {% endif %}
 			    {% endfor %}
                           </div>

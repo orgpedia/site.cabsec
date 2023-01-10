@@ -73,7 +73,7 @@
 					    {%if cabinet.deputy_pm_idxs | length > 0 %}
 					    <div id="deputy_pm_container">
                                             {% else %}
-					      <div id="deputy_pm_container" class="hidden">
+					      <div id="deputy_pm_container" class="hidden"> <!-- ignore -->
              				    {% endif %}
 
                                             <p class="text-[#666666] mt-2 mb-1">{{ site.deputy_prime_ministers }}: </p>
@@ -171,7 +171,7 @@
 					{{ minister.short_post_str | safe }}
 					{% if minister.long_post_str|length > 0 %}
 					<!-- Show More Text  -->
-					<div class="xt hidden">
+					<div class="xt hidden"> <!-- ignore -->
 					  {{ minister.long_post_str | safe }}
 					</div>
 					{% endif %}

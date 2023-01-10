@@ -1,0 +1,9 @@
+for f in `ls -A $1 | grep html$ `; do
+	echo $f; 
+	html-minifier --remove-comments --remove-attribute-quotes --collapse-whitespace --use-short-doctype --remove-optional-tags $1/$f > $2/$f;
+done
+
+for f in `ls -A $1/include | grep html$`; do
+	echo $f; 
+	html-minifier --remove-comments --remove-attribute-quotes --collapse-whitespace --use-short-doctype --remove-optional-tags $1/include/$f > $2/include/$f;
+done

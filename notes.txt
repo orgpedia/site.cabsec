@@ -1,0 +1,53 @@
+search.js: SEARCH
+  1. populate search results with specific class strings -- need to make sure that those show up in
+     tailwind. Currently done through dummy.html
+
+  2. The primary div is replaced by search div 'search-results' and 'primary' should be ids not
+     class.
+
+  3. search-container/mobileSearch/search-form - need to really undrestand this...
+
+
+search.js OFFICER PAGE
+1. update_panel: bulk changing of classlist based on elementID -- save all classes in dummy.html,
+   technically should be able to bulk replace it
+   
+2. update_panel: hidden toggling in the manager design lines over there -- make sure hidden is not replaced
+3. expand_ministry: toggle cursor-pointer
+4. expand_ministry: toggle hidden
+5. expand_ministry: toggle rotate-180
+6. remove and lot of tags "pt-10", "lg:pt-0", "lg:order-none", order-10
+7. order is dynamically populated based on the page -- I think best to ignore this entire. upside is 3 MB
+
+search.js MINISTRY PAGE
+1. bulk create minister panel - make sure the dummy.html has the classes there.
+2. toggle hidden in deputy_pm div - don't touch the hidden class label
+
+
+
+
+search.js SIDEBAR -- COMMON
+1. add/remove -translate-x-full # provide instructions to ignore these two class labels and convert the rest
+2. add/remove translate-x-0 # provide instructions to ignore these two class labels and convert the rest
+
+
+search.js SEARCH-BOX -- COMMON
+1. add/remove hidden # ignore last
+2. add/remove block  # ignore last
+
+
+search.js ORDERS/DETAILS
+1. toggle cursor-pointer - image
+2. toggle cursor-pointer - image
+3. toggle hidden
+4. attribute transform
+5. xt hidden
+
+
+
+
+
+
+
+
+
