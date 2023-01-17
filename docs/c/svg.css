@@ -1,0 +1,89 @@
+.w {
+    fill: none;
+    stroke: blue;
+    stroke-dasharray: 5,5;
+    pointer-events: all;
+}
+
+.officer {
+    fill: blue;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+}
+
+.continues_posts {
+    fill: teal;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.assumes_posts {
+    fill: purple;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.relinquishes_posts {
+    fill: violet;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.cells0 {
+    fill: orange;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.cells1 {
+    fill: yellow;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.cells2 {
+    fill: cyan;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.cells3 {
+    fill: pink;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.line0 {
+    fill: lavender;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.line1 {
+    fill: khaki;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.line2 {
+    fill: indigo;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}
+
+.line3 {
+    fill: ivory;
+    fill-opacity: 0.2;
+    stroke-width: 4;
+    stroke: green;
+}

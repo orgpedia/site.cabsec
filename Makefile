@@ -1,11 +1,13 @@
-
-.PHONY: help clean lint format test pre-commit test
+.PHONY: help clean lint format test pre-commit test  flow export
 
 name := site.cabsec
-instal_stamp := .install.stamp
+
+install_stamp := .install.stamp
 poetry := $(shell command -v poetry 2> /dev/null)
-npm := $(shell command -v npm > /dev/null)
-sources := flow/genSite_/src 
+npm := $(shell command -v npm 2> /dev/null)
+
+import_packages := orgpedia_cabsec
+sources := flow/genSite_/src flow/genSVG_/src 
 
 .DEFAULT_GOAL := help
 
@@ -28,12 +30,28 @@ help:
 
 install: $(install_stamp)
 $(install_stamp): pyproject.toml poetry.lock
-	@if [ -z $(poetry) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
-	@if [ -z $(npm) ]; then echo "Node could not be found. See https://nodejs.org/en/"; exit 2; fi
+	@if [ -z $(poetry) ]; then echo "Poetry not found. See https://python-poetry.org/docs/"; exit 2; fi
+	@if [ -z $(npm) ]; then echo "Node not found. See https://nodejs.org/en/"; exit 2; fi
 
 	$(poetry) install
 	$(npm) ci
 	touch $(install_stamp)
+
+import: $(data_packages)
+	$(poetry) run python -m op import -d import $(data_packages)
+
+flow:
+	cd flow/genSite_ && make;
+	cd flow/genSVG_ && make;
+
+export:
+	$(poetry) run python -m op exportSite -d export flow/genSite_
+
+
+check:
+	$(poetry) run python -m op checkSite export
+
+
 
 clean:
 	find . -type d -name "__pycache__" | xargs rm -rf {};
@@ -41,17 +59,15 @@ clean:
 
 
 lint: $(install_stamp)
-	$(poetry) run isort --profile=black --lines-after-imports=2 --check-only ./tests/ $(NAME)
-	$(poetry) run black --check ./tests/ $(NAME) --diff
-	$(poetry) run flake8 --ignore=W503,E501 ./tests/ $(NAME)
-	$(poetry) run mypy ./tests/ $(NAME) --ignore-missing-imports
-	$(poetry) run bandit -r $(NAME) -s B608
+	$(poetry) run isort $(sources)
+	$(poetry) run black $(sources)
+	$(poetry) run flake8 $(sources)
 
 
 format: $(install_stamp)
-	$(poetry) run isort --profile=black --lines-after-imports=2 ./tests/ $(NAME)
-	$(poetry) run black ./tests/ $(NAME)
+	$(poetry) run isort $(sources)
+	$(poetry) run black $(sources)
 
 
 test: $(install_stamp)
-	$(poetry) run pytest ./tests/ --cov-report term-missing --cov-fail-under 100 --cov $(NAME)
+	$(poetry) run pytest 

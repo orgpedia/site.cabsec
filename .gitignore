@@ -128,14 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 output/
-site/images/rs_images
-site/images/ls_images
+/flow/genSite_/src/images/rs
+/flow/genSite_/src/images/ls
 *~
 logs/
 .bak
 node_modules
 /import
 .DS_Store
-/flow/genSite_/conf/miniHTMLTemplates
-/flow/genSite_/conf/miniCSSTemplates
-
+/flow/genSite_/conf/templates/miniCSS
+/flow/genSite_/conf/templates/miniHTML
+.install.stamp
