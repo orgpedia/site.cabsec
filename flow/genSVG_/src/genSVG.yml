@@ -1,0 +1,10 @@
+images_dir: /Users/mukund/orgpedia/cabsec2/import/images
+ignore_docs: [ ]
+pipeline:
+  - name: html_generator2
+    config:
+      image_root: '.' #../../images
+      svg_root: output/svgs
+      css_file: ../../c/svg.css
+      svg_stem: d
+
