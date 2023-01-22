@@ -29,7 +29,7 @@ help:
 	@echo "Check the Makefile to know exactly what each target is doing."
 
 install: $(install_stamp)
-$(install_stamp): pyproject.toml poetry.lock
+$(install_stamp): pyproject.toml poetry.lock package-lock.json
 	@if [ -z $(poetry) ]; then echo "Poetry not found. See https://python-poetry.org/docs/"; exit 2; fi
 	@if [ -z $(npm) ]; then echo "Node not found. See https://nodejs.org/en/"; exit 2; fi
 
