@@ -74,7 +74,7 @@ poetry run python cors-server.py 8500
 ```
 
 
-## Building.
+## Build
 
 The repository contains generated html pages, so only if you have made any changes to the code you need to regenerate the pages, otherwise the repository is complete.
 
