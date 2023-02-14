@@ -1,3 +1,4 @@
+description: This pipeline generates html that is available on www.orgpedia.in, the html goes through series of compressions first tailwind CSS is minified and then html is minified (check [makefile](makefile)).
 images_dir: /Users/mukund/orgpedia/cabsec2/import/images
 ignore_docs: [ ]
 pipeline:
@@ -5,6 +6,7 @@ pipeline:
     config:
       conf_stub: 'website_language_generator'
       languages: ['en']
+      officer_info_files: ['conf/wiki_officer_images.yml']
 
   # - name: html_generator
   #   config:

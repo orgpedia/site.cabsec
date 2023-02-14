@@ -1,13 +1,12 @@
-from html.parser import HTMLParser
-from pathlib import Path
-import sys
 import string
-import time
+import sys
+from html.parser import HTMLParser
 from os.path import relpath
-import os
+from pathlib import Path
 
-INPUT_HDR ='@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n'
+INPUT_HDR = '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n'
 PY_CLASSES = ['text-base font-semibold leading-5', 'text-sm font-normal leading-4']
+
 
 class ClassRecorder(HTMLParser):
     def __init__(self):
@@ -28,13 +27,13 @@ class ClassRecorder(HTMLParser):
     def handle_starttag(self, tag, attrs):
         for k, v in ((k, v) for k, v in attrs if k == "class"):
             assert '\n' not in v, f'new line found in class {v} {self.file_napme}'
-            assert '  ' not in v, f'double space found in class {v} {self.file_name}'            
+            assert '  ' not in v, f'double space found in class {v} {self.file_name}'
             v = v.strip()
             line = self.get_line()
-            
+
             if '<!-- ignore -->' in line:
                 continue
-            
+
             ignore_idx = None
             if '<!-- ignore' in line:
                 idx_pos = line.index('<!-- ignore ') + len('<!-- ignore ')
@@ -50,6 +49,7 @@ class ClassRecorder(HTMLParser):
             if long_class != 'primary':
                 self.class_dict.setdefault(long_class, []).append(self.file_name)
 
+
 def get_classes(input_dir):
     print(f'Reading {input_dir}')
     class_recorder = ClassRecorder()
@@ -64,6 +64,7 @@ def get_classes(input_dir):
     keys = class_recorder.class_dict.keys()
     return sorted(keys, key=lambda k: -len(k))
 
+
 def write_components(css_path, class_pairs):
     css_components = INPUT_HDR + "@layer components {\n"
     for (long_cls, short_cls) in class_pairs:
@@ -73,21 +74,22 @@ def write_components(css_path, class_pairs):
     css_components += "}"
     css_path.write_text(css_components)
 
+
 def write_html(input_dir, output_dir, class_pairs):
     print(f"Writing from {input_dir} -> {output_dir}")
-    
+
     for html_file in input_dir.rglob("*.html"):
         if '.bak' in str(html_file):
             continue
-        
+
         html_contents = html_file.read_text()
         output_lines = []
         for line in html_contents.split("\n"):
             if "class=" in line and ("<!-- ignore -->" not in line):
                 for (long, short) in class_pairs:
-                    
+
                     if f'class="{long}' in line:
-                        print(f'Replacing {str(html_file)} |{line.lstrip()}| {long} -> {short}')       
+                        print(f'Replacing {str(html_file)} |{line.lstrip()}| {long} -> {short}')
                         line = line.replace(f'class="{long}', f'class="{short}')
                         break
             output_lines.append(line)
@@ -98,7 +100,6 @@ def write_html(input_dir, output_dir, class_pairs):
         print(new_file)
         new_file.parent.mkdir(exist_ok=True)
         new_file.write_text("\n".join(output_lines))
-    
 
 
 if __name__ == "__main__":
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     long_classes = PY_CLASSES + get_classes(input_dir)
 
     print(long_classes)
-    
+
     ltrs = string.ascii_letters
     short_classes = [f"{c}-{d}" for c in ltrs[:26] for d in ltrs[:26]]
 
@@ -117,5 +118,3 @@ if __name__ == "__main__":
     write_components(components_path, class_pairs)
 
     write_html(input_dir, output_dir, class_pairs)
-    
-    

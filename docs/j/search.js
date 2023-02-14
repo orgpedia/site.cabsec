@@ -1,3 +1,6 @@
+/*--------------------------------------------------
+             Search
+----------------------------------------------------*/
 function getJSON(url) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -238,6 +241,9 @@ window.addEventListener("load", function () {
 
 //const sel_color="bg-white border border-blue-500 lg:border-r-0 relative cursor-pointer text-sm";
 
+/*--------------------------------------------------
+             Minister Page
+----------------------------------------------------*/
 
 const sel_color="bg-white border border-blue-500 border-b-0 lg:border lg:border-r-0 relative text-sm cursor-pointer"; //new
 const sel_child_color="p-2 w-full h-full min-w-[210px] lg:relative bg-white focus:bg-white z-20 lg:-right-1 -bottom-4 lg:-bottom-0 text-[#333333]"; // need a way to remove this relative only for mobile, the boxes are not linig correctly

@@ -1,10 +1,19 @@
-images_dir: /Users/mukund/orgpedia/cabsec2/import/images
-ignore_docs: [ ]
+description: This pipeline generates two SVG imaages - 1) With officer and post highlighed, which is then coverted to compressed jpg and shown on orders page. 2) SVG with words highlighted that is used in the details page. All the images (2 jpg images and the svg image) are uploaded on cloud image hosting service.
+
 pipeline:
-  - name: html_generator2
+  - name: svg_generator
     config:
-      image_root: '.' #../../images
-      svg_root: output/svgs
-      css_file: ../../c/svg.css
+      svg_root: output
       svg_stem: d
+
+  - name: html_generator
+    config:
+      html_root: output
+      image_stem: p
+      svg_stem: or
+      color_dict:
+        officer: blue
+        post: green
+        #order_date: red order_date is currently not a region
+      
 

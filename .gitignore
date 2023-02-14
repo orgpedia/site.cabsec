@@ -134,8 +134,9 @@ output/
 logs/
 .bak
 node_modules
-/import
+/import/data_packages/*
+!/import/data_packages/data_packages.yml
+
 .DS_Store
 /flow/genSite_/conf/templates/miniCSS
 /flow/genSite_/conf/templates/miniHTML
-.install.stamp
