@@ -16,7 +16,7 @@
     // "forwardPorts": [],
     
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "make install && make import"
+    "postCreateCommand": "make install && make import",
     
     // Configure tool-specific properties.
     // "customizations": {},
