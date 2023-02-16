@@ -127,11 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-output/
+/flow/genSVG_/output/*
+/flow/genSite_/output/*
+flow/subFlows/translate_/output/*
+
 /flow/genSite_/src/images/rs
 /flow/genSite_/src/images/ls
 *~
-logs/
+*.log
 .bak
 node_modules
 /import/data_packages/*
