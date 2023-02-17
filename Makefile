@@ -25,8 +25,6 @@ help:
 install: pyproject.toml
 	poetry install --only=dev
 	npm ci
-	mkdir genSVG_/output;
-	mkdir genSite_/output;
 
 import: 
 	poetry run op importall import/
