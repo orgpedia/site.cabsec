@@ -1,14 +1,14 @@
+import resource
 import sys
 from pathlib import Path
 
 import docint
 import orgpedia  # noqa
 
-import resource
-
 if __name__ == '__main__':
     input_path = Path(sys.argv[1])
     output_path = Path(sys.argv[2])
+    output_path.mkdir(exist_ok=True)
 
     viz = docint.load('src/genSVG.yml')
 

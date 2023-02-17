@@ -105,6 +105,7 @@ def write_html(input_dir, output_dir, class_pairs):
 if __name__ == "__main__":
     input_dir = Path(sys.argv[1])
     output_dir = Path(sys.argv[2])
+    output_dir.mkdir(exist_ok=True)
 
     long_classes = PY_CLASSES + get_classes(input_dir)
 
@@ -114,7 +115,9 @@ if __name__ == "__main__":
     short_classes = [f"{c}-{d}" for c in ltrs[:26] for d in ltrs[:26]]
 
     class_pairs = list(zip(long_classes, short_classes))
-    components_path = output_dir / Path("tailwindcss") / "input_new.css"
+    components_dir = output_dir / Path("tailwindcss")
+    components_dir.mkdir(exist_ok=True)
+    components_path =  components_dir / "input_new.css"
     write_components(components_path, class_pairs)
 
     write_html(input_dir, output_dir, class_pairs)
