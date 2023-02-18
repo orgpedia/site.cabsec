@@ -89,6 +89,9 @@ if __name__ == '__main__':
     input_dir = Path(sys.argv[1])
     output_dir = Path(sys.argv[2])
 
+    if not output_dir.exists():
+        output_dir.mkdir()
+
     trans_dict = {}
     for stub in STUBS:
         trans_dict[stub] = load_translations(TRANSLATIONS_DIR, stub)

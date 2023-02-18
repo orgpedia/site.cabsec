@@ -1,6 +1,6 @@
 name := site.cabsec
 
-tasks := genSVG_ genSite_
+tasks := subFlows/translate_ genSVG_ genSite_ 
 tasks := $(foreach t,$(tasks),flow/$t)
 
 .DEFAULT_GOAL := help
