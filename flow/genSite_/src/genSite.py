@@ -8,6 +8,9 @@ if __name__ == '__main__':
     input_path = Path(sys.argv[1])
     output_path = Path(sys.argv[2])
 
+    if not output_path.exists():
+        output_path.mkdir()
+
     viz = docint.load('src/genSite.yml')
 
     if input_path.is_dir():
