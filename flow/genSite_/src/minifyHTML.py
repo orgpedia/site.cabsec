@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     for html_file in input_dir.glob('*.html'):
         output_file = output_dir / html_file.name
-        cmd = ['html-minifier'] + MinifierOptions + ['-o', str(output_file), str(html_file)]
+        cmd = ['npx', 'html-minifier'] + MinifierOptions + ['-o', str(output_file), str(html_file)]
         subprocess.check_call(cmd)
         print(cmd)
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     
     for html_file in input_include_dir.glob('*.html'):
         output_include_file = output_include_dir / html_file.name
-        cmd = ['html-minifier'] + MinifierOptions + ['-o', str(output_include_file), str(html_file)]
+        cmd = ['npx', 'html-minifier'] + MinifierOptions + ['-o', str(output_include_file), str(html_file)]
         subprocess.check_call(cmd)        
         print(cmd)
         
