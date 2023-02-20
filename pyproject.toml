@@ -16,7 +16,7 @@ optional = true
 [tool.poetry.group.dev.dependencies]
 docint = { git = "https://github.com/mukundesh/docint.git" }
 orgpedia = { git = "https://github.com/orgpedia/orgpedia.git" }
-orgpedia-cabsec = "0.0.1"
+orgpedia-cabsec = "^0.0.3"
 
 black = "^22.10.0"
 ruff = "^0.0.243"

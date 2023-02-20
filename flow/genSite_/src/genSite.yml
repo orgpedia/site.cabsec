@@ -8,6 +8,12 @@ pipeline:
       languages: ['en']
       officer_info_files: ['conf/wiki_officer_images.yml']
 
+  - name: detail_language_generator
+    config:
+      conf_stub: 'website_language_generator'
+      languages: ['en']
+      officer_info_files: ['conf/wiki_officer_images.yml']
+
   # - name: html_generator
   #   config:
   #     image_root: ../../images

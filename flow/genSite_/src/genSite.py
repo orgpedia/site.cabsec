@@ -15,8 +15,11 @@ if __name__ == '__main__':
 
     if input_path.is_dir():
         assert output_path.is_dir()
-        input_files = list(input_path.glob('*.order.json'))
+        input_files = input_path.glob('*.order.json')
 
         docs = viz.pipe_all(input_files)
+        
         for doc in docs:
             print(f'{doc.pdf_name}')
+
+        
