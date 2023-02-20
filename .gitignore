@@ -141,6 +141,7 @@ node_modules
 !/import/data_packages/data_packages.yml
 
 .DS_Store
-/flow/genSite_/conf/templates/miniCSS
+/flow/genSite_/conf/templates/miniCSS/*
+!/flow/genSite_/conf/templates/miniCSS/dummy.html
 /flow/genSite_/conf/templates/miniHTML
 poetry.lock
