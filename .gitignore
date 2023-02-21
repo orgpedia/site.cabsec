@@ -131,8 +131,8 @@ dmypy.json
 /flow/genSite_/output/*
 flow/subFlows/translate_/output/*
 
-/flow/genSite_/src/images/rs
-/flow/genSite_/src/images/ls
+#/flow/genSite_/src/images/rs
+#/flow/genSite_/src/images/ls
 *~
 *.log
 .bak
