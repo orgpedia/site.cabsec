@@ -962,7 +962,7 @@ function paint_pipe(detail_idx, add_class)
     console.log("paint_pipe detail_idx: " + detail_idx + " add_class: " + add_class);
 
     var svg_doc = document.getElementById("pg_img").contentDocument;
-    const svg_info = detail_ppln_info_array[detail_idx][3][3][0]["idxs"]; // first 3 is to get pipe, second 3 is for svg_info
+    const svg_info = detail_ppln_info_array[detail_idx][5][3][0]["idxs"]; // first 5 is to get pipe from order_builder, second 3 is for svg_info
 
     if (svg_doc == null){
 	console.log(" FAIL _SVG DOC" + document.readyState);
