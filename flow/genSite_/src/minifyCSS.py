@@ -117,7 +117,7 @@ if __name__ == "__main__":
     class_pairs = list(zip(long_classes, short_classes))
     components_dir = output_dir / Path("tailwindcss")
     components_dir.mkdir(exist_ok=True)
-    components_path =  components_dir / "input_new.css"
+    components_path = components_dir / "input_new.css"
     write_components(components_path, class_pairs)
 
     write_html(input_dir, output_dir, class_pairs)
