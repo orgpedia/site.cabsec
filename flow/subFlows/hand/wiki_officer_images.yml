@@ -3419,14 +3419,16 @@ officers:
 
   - officer_id: Q87670923
     name: Bhagwat Karad
-    image_url: https://rajyasabha.nic.in/rsnew/member_site/photos/P2440.jpg
-
+    image_url: https://dpe.gov.in/sites/all/themes/cmf/images/mos_new.png
+    
   - officer_id: Q16902095
     name: Bhagwanth Khuba
     image_url: https://loksabhadocs.nic.in/mpimage/photo/4632.jpg
+    
   - officer_id: Q4850423
     name: Baldev Singh
     image_url: https://upload.wikimedia.org/wikipedia/commons/d/d0/1948_CR_Baldev_Singh_Chiefs_of_Staff.JPG
+    
   - officer_id: Q104178808
     name: B. L. Verma (Uttar Pradesh politician)
     abbr_name: B. L. Verma
