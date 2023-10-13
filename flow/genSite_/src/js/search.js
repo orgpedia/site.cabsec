@@ -1,6 +1,8 @@
 /*--------------------------------------------------
              Search
 ----------------------------------------------------*/
+// https://codepen.io/a-luna/pen/GRooENM
+
 function getJSON(url) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -96,7 +98,8 @@ function handleSearchQuery(event) {
     }
     const results = searchSite(query);
     if (!results.length) {
-        displayErrorMessage("No results found");
+        //displayErrorMessage("No results found");
+	displayErrorMessage(query);	
         return;
     }
     renderSearchResults(query, results);
@@ -140,6 +143,12 @@ function showSearchResults() {
     );
     //document.querySelector(".search-results").classList.remove("hide-element");
     document.querySelector(".search-results").classList.remove("hidden");
+    const results = document.getElementById("search-cells");
+    if (results){
+	results.classList.remove("hidden");
+    }
+
+    
 }
 
 function hideSearchResults() {
@@ -159,6 +168,7 @@ function handleClearSearchButtonClicked() {
     document.getElementById("search").value = "";
 }
 
+/*
 function displayErrorMessage(message) {
     document.querySelector(".search-error-message").innerHTML = message;
     document.querySelector(".search-container").classList.remove("focused");
@@ -166,6 +176,29 @@ function displayErrorMessage(message) {
     document.querySelector(".search-error").classList.remove("hidden");    
     document.querySelector(".search-error").classList.add("fade");
 }
+*/
+
+function displayErrorMessage(message) {
+    console.log("INSIDE displayErrorMessage2: " + message);
+    clearSearchResults();
+    displayErrorStr(message);
+    document.querySelectorAll(".primary").forEach(
+	//        (ar) => (ar.classList.add("hide-element"))
+        (ar) => (ar.classList.add("hidden"))	
+    );
+    document.querySelector(".search-results").classList.remove("hidden");
+    
+    const results = document.getElementById("search-cells");
+    if (results){
+	results.classList.add("hidden");
+    }
+}
+
+function displayErrorStr(message){
+    document.getElementById("query").innerHTML = "Search Terms: \"" + message + "\" not found, please change the query.";
+}
+
+
 
 function removeAnimation() {
     this.classList.remove("fade");
@@ -197,7 +230,7 @@ function handleMobileSearch(event)
     }
     const results = searchSite(query);
     if (!results.length) {
-        displayErrorMessage("No results found");
+        displayErrorMessage(query);
         return;
     }
     renderSearchResults(query, results);
