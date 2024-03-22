@@ -7,16 +7,16 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">3.8.1"
+python = ">3.8.1 <4.0"
 
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-docint = { git = "https://github.com/mukundesh/docint.git" }
+docint = { git = "https://github.com/mukundesh/docInt.git" }
 orgpedia = { git = "https://github.com/orgpedia/orgpedia.git" }
-orgpedia-cabsec = "^0.0.7"
+orgpedia-cabsec = "^0.0.10"
 
 black = "^22.10.0"
 ruff = "^0.0.243"
@@ -28,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 100
 skip-string-normalization = true
-target-version = ['py37', 'py38', 'py39', 'py310']
+target-version = ['py38', 'py39', 'py310']
 include = '\.pyi?$'
 exclude = '''
 /(
