@@ -13,4 +13,4 @@ genSVG:
 # ln -s ../../../../../cabsec/export/page_images/1_Upload_3795 cabsec
 # for f in `ls cabsec/*.png`; do num=`echo $f|cut -d'-' -f2`; convert -strip -interlace plane -gaussian-blur 0.05 -quality 60% -resize 1024 $f p-$num.jpg; done
 # for f in `ls or*.svg | rmext`; do  convert -strip -interlace plane -gaussian-blur 0.05 -quality 60% -resize 1024 $f.svg $f.jpg; done
-# for f in `ls or*.jpg p*.jpg d*.svg`; do echo $f; cld uploader upload $f folder="moi/1_Upload_3635" use_filename=true unique_filename=false headers="X-Robots-Tag: noindex"; done
+# for f in `ls or*.jpg p*.jpg d*.svg`; do echo $f; cld uploader upload $f folder="moi/1_Upload_3XX5" use_filename=true unique_filename=false headers="X-Robots-Tag: noindex"; done
