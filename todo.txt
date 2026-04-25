@@ -1,0 +1,13 @@
+1. In gen_orders_page looks like it computes end_date based on orders and not on ministries.json,
+   so we need to make sure all the orders are correctly copied etc.
+
+2. Move the annual report to the site
+
+3. Convert the long URLs especially the newer ones to go from digital sansad page.
+
+4. Add short Rajiv Gandhi Ministry after Indira Gandhi's death (?)
+
+5. Add multi language search
+
+6. Search by department name (similar search), should retun the user names.
+

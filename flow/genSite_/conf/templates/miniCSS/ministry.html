@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+  </head>
+  <script>
+    council_str = "{{ site.council_on }}";
+    current_str = "{{ site.current_council_of_ministers }}";
+  </script>
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+    {% include 'include/header.html' %}
+
+        <!-- Main Container -->
+        <div class="b-x">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+
+          <main class="c-e">
+	    {% include 'include/search_results.html' %}
+            <section class="primary">
+              <div class="f-n">
+
+		<!-- Bread crumb not using the macro as we need to add the Select date button -->
+		<div class="b-b">
+		  <div class="d-b">
+		    <a href="ministry.html">
+		      <span class="g-p">{{ site.home }}</span>
+		    </a>
+		    <span>
+		      <img src="../i/bc.svg" class="h-q">
+		    </span>
+		    <span id="breadcrumb" class="f-q">{{ site.current_council_of_ministers }}</span>
+		  </div>
+		  <!--
+		      Unable to catch on the onchange event.
+
+		      <div class="datepicker absolute right-0" >
+			<input type="button"
+			       class="px-3 py-1.5 bg-blue-500 text-white w-36" data-mdb-toggle="datepicker" value="Select Date" onclick="select_date(this)" onChange="select_date(this)" />
+		      </div>
+		      -->
+
+		  <div class="e-n">
+		    <input value="{{ site.select_date }}" class="c-l" type="text" min="1947-08-15" onchange="select_date(this)" onfocus="(this.type='date')">
+		  </div>
+
+		</div>
+
+
+
+                    <div class="g-d">
+
+                      <div class="b-h">
+                            <div class="f-d">
+                                <div class="g-w">
+
+                                    <!-- Left Side Minister  -->
+                                    <div class="h-i">
+                                        <h2 id="mini" class="d-e">{{ cabinet.name }}</h2>
+                                        <div class="f-u">
+                                          <div class="g-x">
+                                            <img id="pm_image_url" src="{{ cabinet.pm_image_url }}" alt="{{cabinet.pm_name }}" class="b-y">
+                                          </div>
+                                          <div class="b-z">
+                                            <p class="f-v">{{ site.time_period }}: </p>
+                                            <div>
+					      <span id="m-period_str" class="g-q">{{ cabinet.period_str }}</span>
+                                            </div>
+
+					    {%if cabinet.deputy_pm_idxs | length > 0 %}
+					    <div id="deputy_pm_container">
+                                            {% else %}
+					      <div id="deputy_pm_container" class="hidden"> <!-- ignore -->
+             				    {% endif %}
+
+                                            <p class="e-y">{{ site.deputy_prime_ministers }}: </p>
+					    <div id="deputy_pm" class="h-h">
+					      {% for deputy_pm in cabinet.deputy_pms %}
+					      <div> {{ deputy_pm }} </div>
+					      {% endfor %}
+                                            </div>
+					    </div>
+
+
+                                            <p class="e-y">{{ site.composition }}: </p>
+					    <div id="composition" class="h-h">
+					      {% for (role, role_count) in cabinet.composition %}
+					      <div>{{ role }}: {{ role_count }}</div>
+					      {% endfor %}
+                                            </div>
+
+
+
+
+                                          </div>
+
+                                        </div>
+                                    </div>
+
+				    <!-- Bottom Left Panel -->
+
+
+
+<div class="a-x" onclick="up(0)">
+  <div class="a-v">
+    <div>
+      <p class="c-d">{{ site.key_cabinet_ministers }}</p>
+      <div class="d-f">
+
+	<div class="f-w">
+	  <div>
+	    <h3 id="key-offi-0" class="a-a">{{ cabinet.key_info[0][0] }}</h3>
+	    <h4 id="key-dept-0" class="h-p">{{ cabinet.key_info[0][1]  }}</h4>
+	  </div>
+
+	  <div>
+	    <h3 id="key-offi-1" class="e-f">{{ cabinet.key_info[1][0] }}</h3>
+	    <h4 id="key-dept-1" class="h-p">{{ cabinet.key_info[1][1]  }}</h4>
+	  </div>
+	</div>
+
+	<div class="f-w">
+	  <div>
+	    <h3 id="key-offi-2" class="e-f">{{ cabinet.key_info[2][0] }}</h3>
+	    <h4 id="key-dept-2" class="h-p">{{ cabinet.key_info[2][1]  }}</h4>
+	  </div>
+
+	  <div>
+	    <h3 id="key-offi-3" class="e-f">{{ cabinet.key_info[3][0] }}</h3>
+	    <h4 id="key-dept-3" class="h-p">{{ cabinet.key_info[3][1] }}</h4>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                                </div>
+                            </div>
+
+
+                        <div class="g-l">
+                          <div>
+                            <div class="f-r">
+                              <p class="f-i">{{ site.all_ministers }}</p>
+                            </div>
+
+                            <div class="d-y">
+                              <div>
+                                <div id="details_scroll" class="b-p">
+
+				  {% for minister in cabinet.ministers %}
+                                  <div id="m{{loop.index0}}" class="b-s">
+				    {% if minister.long_post_str|length > 0 %}
+                                    <button onclick="xt(this)" class="a-i">
+				      <img src="../i/but.svg" class="f-p">
+                                    </button>
+				    {% else %}
+				    <div class="h-o"> </div>
+				    {% endif %}
+                                    <div class="b-q" onclick="location.href='{{ minister.url | safe }}'">
+                                      <img src="{{ minister.image_url }}" class="c-n">
+
+					<div class="e-v">
+
+                                        <h3 class="e-m">{{ minister.name }}</h3>
+
+					{{ minister.short_post_str | safe }}
+					{% if minister.long_post_str|length > 0 %}
+					<!-- Show More Text  -->
+					<div class="xt hidden"> <!-- ignore -->
+					  {{ minister.long_post_str | safe }}
+					</div>
+					{% endif %}
+                                      </div>
+                                    </div>
+                                  </div>
+				    {% endfor %}
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        </div>
+        </section>
+        </main>
+</div>
+{% include 'include/footer.html' %}
+</body>
+</html>

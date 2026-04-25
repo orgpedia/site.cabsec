@@ -1,0 +1,12 @@
+<!doctype html><html lang=en><head>{% include 'include/head.html' %}<script type=application/ld+json>{
+	"@context": "https://schema.org",
+	"@type": "ItemList",
+	"url": "{{ site.page_url}}",
+	"numberOfItems": "{{ primes | length }}",
+	"itemListElement": [
+	    {% for prime in primes %}
+	    {% from 'macros.html' import officer_jsonld_info with context %}
+	    {{ officer_jsonld_info(prime) }}
+	    {% endfor %}
+	]
+    }</script>{% from 'macros.html' import breadcrumb with context %} {% include 'include/header.html' %}<div class=b-x>{% include 'include/side_bar.html' %}<main class=c-e>{% include 'include/search_results.html' %}<section class=primary><div class=f-n>{{ breadcrumb([(site.home, 'ministry.html'), (site.deputy_prime_ministers, 'deputy.html')]) }}<div class=e-e><h2 class=d-d>{{ site.deputy_prime_ministers | capitalize }}</h2><div class=b-u>{% for prime in primes %} {% from 'macros.html' import officer_tile with context %} {{ officer_tile(prime, site, 'deputy') }} {% endfor %}</div></div></div></section></main></div>{% include 'include/footer.html' %}

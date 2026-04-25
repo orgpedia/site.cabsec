@@ -1,0 +1,100 @@
+
+{% macro breadcrumb(crumbs=[], last_id=-1) -%}
+<div class="b-k">
+  {% for (name, href) in crumbs %}
+  {% if (loop.last) %}
+      {% if (last_id == -1) %}
+      <span class="f-q">{{ name }}</span>
+      {% else %}
+      <span id="{{last_id}}" class="f-q">{{ name }}</span>
+      {% endif %}
+
+
+
+  {% else %}
+  <a href="{{ href | replace(' ', '_') }}">
+    <span class="g-p">{{ name }}</span>
+  </a>
+  <span>
+    <img src="../i/bc.svg" class="h-q">
+  </span>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endmacro %}
+
+
+{% macro officer_tile(officer, site, tenure_type='officer') %}
+<div onclick="location.href='{{ officer.url }}';" style="cursor:pointer;"
+     class="b-a">
+  <img src="{{ officer.image_url }}" class="f-z" alt="{{ officer.full_name }}">
+  <div class="g-a">
+    <h4 class="h-h">{{ officer.full_name }}</h4>
+    {% if tenure_type == 'officer' %}
+    <p class="e-q">{{ site.tenure }}: {{ officer.tenure_str }}</p>
+    {% elif tenure_type == 'prime' %}
+    <p class="e-q">{{ site.tenure }}: {{ officer.prime_tenure_str }}</p>
+    {% else %}
+    <p class="e-q">{{ site.tenure }}: {{ officer.deputy_tenure_str }}</p>
+    {% endif %}
+
+  </div>
+</div>
+{% endmacro %}
+
+{% macro officer_jsonld_info(officer) %}
+            {
+                "@type": "Person",
+                "image": "{{ officer.image_url }}",
+                "url": "{{ officer.url }}",
+                "name": "{{ officer.full_name }}",
+             }
+{% endmacro %}
+
+
+
+{% macro order_tile(order, site) %}
+<div onclick="location.href='{{order.url}}';" style="cursor:pointer;"
+     class="b-a">
+ <img src="../i/p2.svg">
+  <div class="g-a">
+    <h4 class="h-h">{{order.order_id}}</h4>
+    <p class="e-q">{{order.date_str}}</p>
+    <br>
+    <p class="e-q">{{ site.order_type }}:</p>
+    <p class="h-h">{{order.category}}</p>
+
+    <p class="e-q"># {{ site.order_details }}:</p>
+    <p class="h-h">{{order.num_details}}</p>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro order_jsonld_info(order, site) %}
+            {
+                "@type": "Legislation",
+                "image": "{{ order.svg_pages[0] }}",
+                "url": "{{ site.page_url }}",
+                "name": "{{ order.order_id }}",
+             }
+{% endmacro %}
+
+
+{% macro sel_tenure_panel(tenure) %}
+<div id="t{{tenure.tenure_pos}}" class="a-r cursor-pointer" onclick="up({{ tenure.tenure_pos }})"> <!-- ignore -1 -->
+  <div id="tc{{officer.first_tenure.tenure_pos}}" class="a-h">
+    <h4 class="g-b">{{ tenure.dept }}</h4>
+    <p>{{ tenure.role }}</p>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro unsel_tenure_panel(tenure) %}
+<div id="t{{tenure.tenure_pos}}" class="b-d cursor-pointer" onclick="up({{ tenure.tenure_pos }})"> <!-- ignore -1 -->
+  <div id="tc{{tenure.tenure_pos}}" class="d-x">
+    <h4 class="g-b">{{ tenure.dept }}</h4>
+    <p>{{ tenure.role }}</p>
+  </div>
+</div>
+{% endmacro %}

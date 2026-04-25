@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+  </head>
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+    {% from 'macros.html' import order_tile %}
+
+      {% include 'include/header.html' %}
+
+        <!-- Main Container -->
+        <div class="b-x">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+
+          <main class="c-e">
+	    {% include 'include/search_results.html' %}
+                <section class="primary">
+                  <div class="f-n">
+		    {{ breadcrumb(order_group.crumbs) }}
+                    <div class="e-e">
+			<div class="b-r">
+                          <h2 class="d-d">{{ site.orders }} ({{order_group.ministry}})</h2>
+                          <div class="c-u">
+			    {% for idx in order_group.all_idxs %}
+			    {% if idx != order_group.idx %}
+			    <span><a href="orders-{{order_group.all_en_idxs[loop.index0] | replace(' ', '_')}}.html" title="{{order_group.all_ministries[loop.index0]}}">{{ idx }}</a></span> <span class="f-q">|</span>
+			    {% else %}
+			    <span class="f-q">{{ idx }} |</span>
+			    {% endif %}
+			    {% endfor %}
+                          </div>
+                        </div>
+                        <div class="b-u">
+			  {% for order in order_group.order_infos %}
+			  {{ order_tile(order, site) }}
+			  {% endfor %}
+                        </div>
+                    </div>
+                  </div>
+                </section>
+          </main>
+        </div>
+	{% include 'include/footer.html' %}
+    </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+
+    <script>
+      const detail_page_idxs = {{ order.d_page_idxs }};
+    </script>
+  </head>
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+      {% include 'include/header.html' %}
+
+        <!-- Main Container -->
+        <div class="b-x">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+
+          <main class="c-r">
+	    {% include 'include/search_results.html' %}
+                <section class="primary">
+                  <div class="f-n">
+		    {{ breadcrumb(order.crumbs) }}
+
+                    <div class="g-d">
+		      <!-- Header for both left right panels -->
+
+                      <div class="f-o">
+			<!-- Header for LEFT panel -->
+
+                        <div class="e-h">
+                          <span>  <img src="../i/pdf.svg"> </span>
+                          <p class="c-p">
+                            {{ order.order_id }}</p>
+                        </div>
+
+                        <div onclick="location.href='https://github.com/orgpedia/cabsec'" style="cursor:pointer" class="f-a">
+                          <span class="g-v"><a href="#">{{ site.view_on_github }}</a></span>
+                          <span>
+			    <img src="../i/gh.svg">
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="a-y">
+                        <div class="e-o">
+
+                          <div class="d-j">
+                            <div class="h-c">
+                              <p class="f-g">{{ site.order_date }}: {{ order.date_str }}</p>
+                              <p class="f-g">{{ site.order_type }}:
+				<span class="f-s">{{ order.category }}</span></p>
+                            </div>
+                          </div>
+                          <p class="e-l">{{ site.page }} <span id="pg_num"> {{ order.first_page_num }}</span>  / <span id="num_pgs">{{ order.num_pages }}</span></p>
+                          <div class="d-k">
+                                <div class="h-m">
+
+				{% if order.images|length != 1 %}
+			  <button id="prev" onclick="change_image(-1)" class="d-q cursor-pointer"> <!-- ignore -1 -->
+			    <span class="a-p">
+			      <img src="../i/but.svg" class="e-b">
+                            </span>
+			  </button>
+			  {% endif %}
+
+                                  <img id="pg_img" src="{{ order.first_image_url }}" alt="Page Image">
+
+
+				  {% if order.images|length != 1 %}
+
+                          <button id="next" onclick="change_image(1)" class="d-o cursor-pointer"> <!-- ignore -1 -->
+                            <span class="a-p">
+			      <img src="../i/but.svg" class="f-p" style="transform:rotate(270deg)">
+			    </span>
+                          </button>
+				{% endif %}
+                              <!-- Slider controls -->
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="f-h">
+                          <div>
+                            <div class="h-y">
+                              <p class="f-i">{{ site.all_pages }}</p>
+                            </div>
+
+                            <div class="h-n">
+                              <div>
+                                <div id="details_scroll" class="b-p">
+				  {%- for detail in order.details -%}
+                                  <div id="d{{loop.index0}}" class="b-s">
+				    {%- if detail.long_post_str|length > 0 -%}
+                                    <button onclick="xt(this)" class="a-i">
+				      <img src="../i/but.svg" class="f-p">
+                                    </button>
+				    {%- else -%}
+				    <div class="h-o"> </div>
+				    {%- endif -%}
+                                    <div class="b-q">
+                                      <img src="{{ detail.officer_image_url }}" onclick="location.href='{{ detail.officer_url }}'" class="c-n">
+				      {%- if site.lang|string() == "en" -%}
+                                      <div class="e-v" onclick="location.href='{{ detail.details_url | safe }}'">
+					{%- else -%}
+					<div class="e-v" onclick="location.href='{{ detail.officer_url | safe }}'">
+					  {%- endif -%}
+                                        <h3 class="e-m">{{ detail.name }}</h3>
+					{{ detail.short_post_str | safe }}
+					{%- if detail.long_post_str|length > 0 -%}
+					<!-- Show More Text  -->
+					<div class="xt hidden"> <!-- ignore -->
+					  {{ detail.long_post_str | safe }}
+					</div>
+					{%- endif -%}
+                                      </div></div></div>
+				  {%- endfor -%}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        </div>
+        </section>
+        </main>
+</div>
+{% include 'include/footer.html' %}
+</body>
+</html>

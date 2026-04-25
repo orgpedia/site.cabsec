@@ -1,0 +1,103 @@
+        <header>
+            <div class="a-g">
+                <div class="a-o">
+                    <!-- Logo -->
+                    <a href="../index.html" class="d-i">
+                        <div class="a-u">
+                            <p class="c-b"><span class="text-blue-500">o</span>p</p>
+                        </div>
+                        <div class="b-l">
+                            <img src="../i/l-{{ site.lang }}.svg" class="f-j" alt="">
+                            <p class="a-q">
+                                {{ site.ministers_of_india }}</p>
+                        </div>
+                    </a>
+
+                    <!--  Search Input -->
+                    <div class="d-n">
+                        <div class="g-n">
+                            <form id="search-form" name="searchForm" role="form" onsubmit="return false">
+                                <div class="f-f">
+                                    <span class="e-u">{{ site.search }}</span>
+                                    <div class="relative search-container"> <!-- ignore -->
+				      <i class="fa fa-search"></i> <!-- ignore -->
+                                        <input type="search" id="search" name="q" autocomplete="off"
+                                            class="a-s"
+                                            placeholder="{{ site.ministers_orders }}" required="">
+                                        <div class="a-w">
+                                            <svg aria-hidden="true" class="d-a"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Toggle Menu Btn  -->
+                        <button id="mbo" type="button" class="f-m">
+			  <img src="../i/b.svg" class="h-k">
+                        </button>
+                    </div>
+
+                    <!-- Language Select Input -->
+                    <div class="g-c">
+                        <div class="g-n">
+                          <div class="g-e">
+				{% if "Order Details" not in site.title %}
+				<select name="lang_menu" id="lang_menu" class="b-v" onchange="select_language()">
+                                  <!-- <option selected="ignore">Select Language</option> -->
+                                    <option value="en"{{ site.en }}>English</option>
+                                    <option value="as"{{ site.as }}>অসমীয়া (Assamese)</option>
+                                    <option value="bn"{{ site.bn }}>বাংলা (Bangla)</option>
+                                    <option value="brx"{{ site.brx }}>बड़ो (Boro)</option>
+				    <option value="doi"{{ site.doi }}>डोगरी (Dogri)</option>
+				    <option value="gu"{{ site.gu }}>ગુજરાતી (Gujrati)</option>
+				    <option value="hi"{{ site.hi }}>हिन्दी (Hindi)</option>
+				    <option value="kn"{{ site.kn }}>ಕನ್ನಡ (Kannada)</option>
+				    <option value="ks"{{ site.ks }}>کوشور (Kashmiri)</option>
+				    <option value="gom"{{ site.gom }}>कोंकणी (Konkani)</option>
+				    <option value="mai"{{ site.mai }}>मैथिली (Maithili)</option>
+				    <option value="mni"{{ site.mni }}>ꯃꯩꯇꯩꯂꯣꯟ (Meitei)</option>
+				    <option value="ml"{{ site.ml }}>മലയാളം (M'lam)</option>
+				    <option value="mr"{{ site.mr }}>मराठी (Marathi)</option>
+				    <option value="ne"{{ site.ne }}>नेपाली (Nepali)</option>
+				    <option value="or"{{ site.or }}>ଓଡ଼ିଆ (Odia)</option>
+				    <option value="pa"{{ site.pa }}>ਪੰਜਾਬੀ (Punjabi)</option>
+  				    <option value="sa"{{ site.sa }}>संस्कृत (Sanskrit)</option>
+  				    <option value="sat"{{ site.sat }}>ᱥᱟᱱᱛᱟᱲᱤ (Santhali)</option>
+  				    <option value="sd"{{ site.sd }}>सिंधी (Sindhi)</option>
+  				    <option value="te"{{ site.te }}>తెలుగు (Telgu)</option>
+  				    <option value="ta"{{ site.ta }}>தமிழ் (Tamil)</option>
+  				    <option value="ur"{{ site.ur }}>اُردُو (Urdu)</option>
+</select>
+{% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Search box  -->
+                        <div>
+                          <span id="sb" class="h-l">
+			    <img src="../i/sw.svg" class="h-s">
+                            </span>
+
+                              <div id="sbt" class="duration-700 lg:hidden ease-in-out hidden"> <!-- ignore -->
+                                <span id="sbc" class="b-n"></span>
+                                <div class="a-k">
+                                    <div class="c-h">
+                                        <input type="search" id="mobileSearch" name="mq" autocomplete="off"
+                                            class="a-c"
+                                            placeholder="{{ site.Search }}...">
+                                        <button class="b-w">
+					  <img src="../i/sw.svg" class="h-s">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>

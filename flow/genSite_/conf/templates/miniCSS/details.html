@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+
+    <script>
+      const detail_info_array = {{ order.details_json_str | safe }} ; // <!-- ignore -->
+      const detail_ppln_info_array = {{ order.details_ppln_json_str | safe }} ; // <!-- ignore -->
+    </script>
+  </head>
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+      {% include 'include/header.html' %}
+
+        <!-- Main Container -->
+        <div class="b-x">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+
+          <main class="c-r">
+	    {% include 'include/search_results.html' %}
+                <section class="primary">
+                  <div class="f-n">
+		    {{ breadcrumb(order.ppln_crumbs, "d_num2") }}
+
+                    <div class="g-d">
+		      <!-- Header for both left right panels -->
+
+                      <div class="f-o">
+			<!-- Header for LEFT panel -->
+
+                        <div class="e-i">
+                          <span>  <img src="../i/pdf.svg"> </span>
+                          <p class="c-p">
+                            {{ order.order_id }}: Detail-<span id="d_num">1</span></p>
+                        </div>
+                      </div>
+
+                      <div class="a-z">
+                        <div class="f-k">
+                                  <div class="b-s">
+                                    <button id="prev" onclick="change_detail(-1)" class="a-l cursor-pointer">  <!-- ignore -1 -->
+				      <img src="../i/but.svg" class="e-b">
+                                    </button>
+                                    <div onclick="change_location_officer('d4')" style="cursor:pointer" class="c-f">
+                                      <img id="d1" src="{{ detail.officer_image_url }}" class="e-c">
+                                      <div class="h-f">
+                                        <h3 id="d0" class="e-m">{{ detail.name }}</h3>
+					<div id="d2">
+					  {{ detail.short_post_str | safe }}
+					</div>
+					<div id="d3">
+					  {{ detail.long_post_str | safe }}
+					</div>
+					<div id="d4" class="hidden"> <!-- ignore -->
+					  {{ detail.officer_url }}
+					</div>
+                                      </div>
+                                    </div>
+                                    <button id="next" onclick="change_detail(1)" class="a-l cursor-pointer"> <!-- ignore -1 -->
+				      <img src="../i/but.svg" class="f-p" style="transform:rotate(270deg)">
+                                    </button>
+                                  </div>
+
+
+
+
+				  <p class="d-t">{{ site.page }} <span id="pg_num"> {{ order.first_page_num }}</span> / {{ order.num_pages }} </p>
+                          <div class="c-q">
+                            <div>
+                              <div>
+                                <div class="h-m">
+                                  <object type="image/svg+xml" id="pg_img" data="{{ order.first_svg_url }}" alt="Page Image"></object>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="f-k">
+                          <div>
+                            <div class="h-n">
+                              <div>
+                                <div class="b-p"> <!-- changed this -->
+				  {% for pipe in detail_ppln %}
+                                  <div class="b-s" onclick="load_svg({{pipe.pipe_idx}})">
+
+                                    <button onclick="xt(this)" class="a-i">
+				      <img src="../i/but.svg" class="f-p">
+                                    </button>
+                                    <div class="b-q">
+                                      <div class="h-f">
+                                        <h4>
+					  <span id="{{ pipe.pipe_idx }}-0" class="h-g">{{ pipe.object_name }}</span>
+					  <span id="{{ pipe.pipe_idx }}-1" class="h-p"> {{ pipe.object_count }}</span>
+					  | <span id="{{ pipe.pipe_idx }}-4" class="h-p"> {{ pipe.pipe_name }}</span>
+					</h4>
+					<div class="h-a">
+					  <code id="{{ pipe.pipe_idx }}-2" class="e-x">{{ pipe.object_html_json }}</code>
+					</div>
+
+					<div class="h-z xt hidden"> <!-- ignore -2 -->
+					  <span class="d-r"></span>
+					  <h4 id="{{ pipe.pipe_idx }}-4" class="g-o">{{ pipe.pipe_name }}</h4>
+					  <p class="d-u">Errors <span id="{{ pipe.pipe_idx }}-5">({{ pipe.pipe_error_count }}):</span>
+					    <span id="{{ pipe.pipe_idx }}-6" class="h-b"> details: {{ pipe.pipe_error_details }}</span>
+					  </p>
+					  <p class="d-u">Edits <span id="{{ pipe.pipe_idx }}-7">({{ pipe.pipe_edit_count }}):</span>
+					    <span id="{{ pipe.pipe_idx }}-8" class="h-b"> {{ pipe.pipe_edit_details }}</span>
+					  </p>
+					  <p class="f-y">
+					    <a class="g-v" href="{{ pipe.pipe_log_url }}">Logs</a> |
+					    <a class="g-v" href="{{ pipe.pipe_config_url }}">Config</a>
+					  </p>
+					</div>
+				      </div>
+                                    </div>
+				  </div>
+				  {% endfor %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        </div>
+        </section>
+        </main>
+</div>
+{% include 'include/footer.html' %}
+
+</body>
+</html>

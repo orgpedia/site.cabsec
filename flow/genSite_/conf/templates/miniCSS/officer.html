@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% include 'include/head.html' %}
+
+<!--
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@orgpedia_in" />
+	<meta name="twitter:creator" content="@mukundesh" />
+	<meta property="og:url" content="{{ site.page_url }}" />
+	<meta property="og:title" content="{{ site.title }}" />
+	<meta property="og:description" content="{{ site.description }}" />
+	<meta property="og:image" content=" {{ site.image_url }}" />
+	<meta property="og:locale" content="{{ site.locale }}" />
+	{% for alt_locale in site.alt_locales %}
+	<meta property="og:locale:alternate" content="{{ alt_locale }}" />
+	{% endfor %}
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:profile:first_name" content="{{ site.title }}" />
+    <meta property="og:profile:last_name" content="{{ site.title }}" />
+-->
+
+    <script>
+      var current_tenure_idx=0;var current_ministry_idx=0;var slo={{ officer.slo }};const tenure_info_array = {{ officer.tenure_json_str | safe }};
+    </script>
+    <script type="application/ld+json">{"@context": "https://schema.org","@type": "Person","image": "{{ officer.image_url }}","jobTitle": " {{ officer.key_role }}","name": "{{ officer.full_name }}","url": "{{ officer.page_url }}"}</script>
+
+  </head>
+
+  <body>
+    {% from 'macros.html' import breadcrumb with context %}
+    {% from 'macros.html' import sel_tenure_panel with context %}
+    {% from 'macros.html' import unsel_tenure_panel with context %}
+
+    {% include 'include/header.html' %}
+
+        <!-- Main Container -->
+        <div class="b-x">
+
+          <!-- Side Navigation Menu -->
+	  {% include 'include/side_bar.html' %}
+
+          <main class="c-e">
+	    {% include 'include/search_results.html' %}
+            <section class="primary">
+                  <div class="f-n">
+		    {{- breadcrumb(officer.crumbs) -}}
+
+                    <div class="c-m">
+                        <div class="d-v">
+                            <div class="g-i">
+                                <div class="g-w">
+
+                                    <!-- Left Side Minister  -->
+                                    <div class="h-i">
+                                        <h2 class="d-e">{{ officer.full_name.upper() }}</h2>
+                                        <div class="f-u">
+                                            <div class="g-x">
+                                                <img src="{{ officer.image_url }}" alt="{{ officer.full_name }}" class="b-y">
+                                            </div>
+                                            <div class="c-a">
+                                              <p class="f-x">{{ site.key_tenures }}: </p>
+					      {%- for key_info in officer.key_infos %}
+                                                <div class="h-y">
+                                                  <h4 class="g-y">
+						    {% if key_info.dept | length > 1 %}
+						    {{ key_info.dept }},
+						    {% endif %}
+						    {{ key_info.role }}</h4>
+                                                    <p class="g-r"> {{ key_info.tenure_str }}</p>
+                                                </div>
+						{% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+				    <!-- Bottom Left Panel -->
+                                    <div class="f-l">
+
+				      {% if officer.ministries.items()|length > 1%}
+                                      <div id="m0" class="flex flex-row items-center gap-2 order-{{ officer.slo }} pt-10 lg:pt-0 lg:order-none" onclick="em(0)"> <!-- ignore -->
+                                        <span class="a-p">
+					  <img id="sm0" src="../i/but.svg" class="f-p rotate-180"> <!-- ignore -1 -->
+                                        </span>
+                                        <p class="c-j">{{ officer.first_ministry }}</p>
+                                      </div>
+				      {% else %}
+                                      <div id="m0" class="flex flex-row items-center gap-2 order-{{ officer.slo }} pt-10 lg:pt-0 lg:order-none cursor-pointer"> <!-- ignore -->
+                                        <p class="c-j">{{ officer.first_ministry }}</p>
+                                      </div>
+				      {% endif %}
+
+                                      <div class="a-d">
+					{{ sel_tenure_panel(officer.first_tenure) }}
+					{% for tenure in officer.first_ministry_tenures %}
+					     {% if loop.index != 1 %}
+					         {{ unsel_tenure_panel(tenure) }}
+					     {% endif %}
+					 {% endfor %}
+				      </div>
+
+				      {% for (ministry, tenures) in officer.ministries.items() %}
+				      {% if loop.index != 1 %}
+                                      <div id="m{{loop.index0}}" class="flex flex-row items-center gap-2 cursor-pointer" onclick="em({{loop.index0}})"> <!-- ignore -->
+                                        <span class="a-p">
+					  <img id="sm{{loop.index0}}" src="../i/but.svg" class="f-p">
+                                        </span>
+                                        <p class="c-j">{{ ministry }}</p>
+                                      </div>
+                                        <div class="a-f hidden"> <!-- ignore -1 -->
+					  {% for tenure in tenures %}
+					      {{ unsel_tenure_panel(tenure) }}
+					  {% endfor %}
+				      </div>
+				      {% endif %}
+				      {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Side Minister -->
+                            <div class="e-r">
+                                <h2 id="rt-ministry" class="b-o">{{ officer.first_ministry }}</h2> 
+                                <div class="d-z">
+                                    <div class="g-f">
+                                        <div class="g-s">
+                                            <h5 class="h-p">{{ site.tenure_info }}</h5>
+                                            <h3 id="rt-dept" class="f-s">{{ officer.first_tenure.dept }},</h3>
+                                            <h3 id="rt-role" class="f-s">{{ officer.first_tenure.role }}</h3>
+                                            <p id="rt-date_str" class="g-t">{{ officer.first_tenure.start_date_str }} - {{ officer.first_tenure.end_date_str }}</p>
+                                            <a class="d-g">{{ site.orders }}</a>
+                                        </div>
+                                        <div class="i-b">
+                                          <div onclick="change_location('rt-start_order_id')" style="cursor:pointer" class="f-e">
+                                                <span><img src="../i/pdf.svg"> </span>
+                                                <p id="rt-start_order_id" class="g-g">{{ officer.first_tenure.start_order_id }}</p>
+                                            </div>
+                                            <div onclick="change_location('rt-end_order_id')" style="cursor:pointer" class="f-e">
+                                                <span><img src="../i/pdf.svg"> </span>
+                                                <p id="rt-end_order_id" class="g-g">{{ officer.first_tenure.end_order_id }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <span class="d-r"></span>
+                                    <!-- Manager Design (md) -->
+                                    <div class="h-j">
+                                      <div class="a-m">
+					{% if officer.first_tenure.manager_infos_count > 2 %}
+                                        <span id="md-center-line" class="b-i"></span>
+					{% else %}
+                                        <span id="md-center-line" class="b-c"></span>
+					{% endif %}
+
+					{% for manager_info in officer.first_tenure.manager_infos %}
+
+					{% if (officer.first_tenure.manager_infos_count == 2) and (loop.index0  == 1) %}
+                                        <div id="md-div-{{ loop.index0 }}" class="c-k {{manager_info.border}} hidden" style="cursor:pointer" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore -2 -->
+					{% else %}
+                                        <div id="md-div-{{ loop.index0 }}" class="c-k {{manager_info.border}}" style="cursor:pointer" onclick="change_location_officer('rt-manager-url-{{ loop.index0 }}')"> <!-- ignore -1 -->
+					{% endif %}
+                                                <div class="b-e {{manager_info.top_margin}}"> <!-- ignore -1 -->
+                                                    <img id="rt-manager-image_url-{{ loop.index0 }}" src="{{ manager_info.image_url }}" class="e-c" alt="{{ manager_info.full_name }}">
+                                                    <div>
+                                                      <h3 id="rt-manager-full_name-{{ loop.index0 }}" class="e-g">{{ manager_info.full_name }}</h3>
+						      <span id="rt-manager-url-{{ loop.index0 }}" class="h-v">{{ manager_info.url }}</span>
+                                                        <p id="rt-manager-role-{{ loop.index0 }}" class="e-j">{{ manager_info.role }}
+                                                        </p>
+                                                        <p id="rt-manager-date_str-{{ loop.index0 }}" class="g-h">{{ manager_info.start_date_str }} - {{ manager_info.end_date_str }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+					    {% endfor %}
+                                        </div>
+                                    </div>
+                                    <span class="d-r"></span>
+
+
+                                    <div class="i-d">
+                                        <h2 class="e-z">{{ site.relevant_orders }}</h2>
+                                        <div id="relevant-orders" class="g-u">
+					    {% for (order_id, order_category, detail_idx, date_str) in officer.first_tenure.all_orderid_detailidxs %}
+					    <div onclick="change_location_detail('rel-{{ order_id }}', 'rel-{{ detail_idx }}')" style="cursor:pointer" class="f-e">
+						<span><img src="../i/pdf.svg"> </span>
+						<span id="rel-{{ order_id }}" class="g-g">{{ order_id }}</span>
+						<span class="h-v">[{{ detail_idx }}]</span>
+						<span class="h-p">{{ date_str }}</span>
+						<span class="h-p">{{ order_category }}</span>
+                                              </div>
+					     {% endfor %}
+					</div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+	{% include 'include/footer.html' %}
+    </body>
+</html>
