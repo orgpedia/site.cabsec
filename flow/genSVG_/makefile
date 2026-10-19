@@ -4,7 +4,7 @@ name := site.cabsec/flow/genSVG_
 .PHONY: genSVG
 
 genSVG:
-	poetry run python src/genSVG.py input output > logs/info.log;
+	uv run python src/genSVG.py input output > logs/info.log;
 
 
 ### Following steps need to be done to create the image, you only need to create

@@ -4,7 +4,7 @@ tasks := subFlows/translate_ genSVG_ genSite_
 tasks := $(foreach t,$(tasks),flow/$t)
 
 .DEFAULT_GOAL := help
-.PHONY: import flow export lint format $(tasks)
+.PHONY: help install import flow export lint format $(tasks)
 
 help:
 	$(info Please use 'make <target>', where <target> is one of)
@@ -23,25 +23,25 @@ help:
 
 
 install: pyproject.toml
-	poetry install --only=dev
+	uv sync --python 3.12
 	npm ci
 
 import: 
-	poetry run op importall import/
+	uv run op importall import/
 
 flow: $(tasks)
 $(tasks):
-	poetry run make -C $@
+	uv run make -C $@
 
 lint:
-	poetry run black -q .
-	poetry run ruff .
+	uv run black -q .
+	uv run ruff check .
 
 format:
-	poetry run black -q .
-	poetry run ruff --fix .
+	uv run black -q .
+	uv run ruff check --fix .
 
 
-export: format lint
-	poetry run op exportsite flow/genSite_ docs/
+export: 
+	uv run op exportsite flow/genSite_ docs/
 

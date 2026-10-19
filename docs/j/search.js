@@ -455,6 +455,9 @@ function period_str(ministry_date_idxs)
     const e_dt = ministry_date_idxs[1];
 
     const s_str = `${translate_num(s_dt[2])} ${ministry['months'][s_dt[1]]} ${translate_num(s_dt[0])}`;
+    if (!e_dt || e_dt.length === 0) {
+        return s_str + " - " + (ministry['to_date'] || "To Date");
+    }
     const e_str = `${translate_num(e_dt[2])} ${ministry['months'][e_dt[1]]} ${translate_num(e_dt[0])}`;    
 
     return s_str + " - " + e_str;
