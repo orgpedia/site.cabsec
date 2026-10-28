@@ -1,4 +1,4 @@
-description: This pipeline generates html that is available on www.orgpedia.in, the html goes through series of compressions first tailwind CSS is minified and then html is minified (check [makefile](makefile)).
+description: This pipeline generates html that is available on ministry.orgpedia.in, the html goes through series of compressions first tailwind CSS is minified and then html is minified (check [makefile](makefile)).
 images_dir: /Users/mukund/orgpedia/cabsec2/import/images
 ignore_docs: [ ]
 pipeline:

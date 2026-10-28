@@ -1,18 +1,18 @@
 # site.cabsec - Repository for the website
-This repository generates the pages on https://www.orgpedia.in/.
+This repository generates the pages for [Ministers of India](https://ministry.orgpedia.in/).
 
-Most of this repository is just html pages, if you are looking for
-data that is presented please check https://github.com/orgpedia/cabsec.
+Most of this repository is generated HTML pages; if you are looking for
+the raw data being presented, please check [orgpedia/cabsec](https://github.com/orgpedia/cabsec).
 
 
 # Developer Instructions
-If you are interested in changing the code that generates the HTML pages, please follow below instructions
+If you are interested in changing the code that generates the HTML pages, please follow the instructions below.
 
 ## Prerequisites
 - Git
-- Python 3.7+
-- Poetry
-- Node.js
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/) (Python package and project manager)
+- Node.js & npm
 
 
 ## Installation
@@ -21,74 +21,81 @@ If you are interested in changing the code that generates the HTML pages, please
 To install Git, visit the [Git website](https://git-scm.com/) and follow the installation instructions for your operating system.
 
 ### Python
-To install Python, visit the [Python website](https://www.python.org/downloads/) and download the latest version of Python 3.x for your operating system. Follow the installation instructions for your operating system.
+Python 3.12+ is required. You can install Python via your system package manager or download it from the [Python website](https://www.python.org/downloads/). Alternatively, `uv` can install and manage Python versions automatically.
 
-### Poetry
-To install Poetry, visit the [Poetry website](https://python-poetry.org/docs/#installation) and follow installation instructions for your operating system:
+### uv
+To install `uv`, visit the [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/) or run:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
 ### Node.js
-To install Node.js, visit the [Node.js website](https://nodejs.org/en/download/) and download the latest version of Node.js for your operating system. Follow the installation instructions for your operating system.
+To install Node.js and npm, visit the [Node.js website](https://nodejs.org/) and download the LTS version for your operating system.
 
 
 ## Setup
 
-To setup the project, clone the repository using git (this is a large repository, will take several minutes):
+Clone the repository:
 
-```
+```bash
 git clone https://github.com/orgpedia/site.cabsec.git
-```
-
-Navigate to the project directory:
-
-```
 cd site.cabsec
 ```
-Use poetry to install software dependencies:
 
-```
-poetry install --with dev
-```
-Install node.js dependencies
+Install software dependencies (Python virtual environment via `uv` and Node packages via `npm`):
 
-```
-npm -ci
+```bash
+make install
 ```
 
-Install the data required for this repository
+This runs:
+- `uv sync --python 3.12`
+- `npm ci`
+
+Import the data required for this repository:
+
+```bash
+make import
 ```
-poetry run task import
+
+After this, the required data and tools are prepared. The repository structure is:
+
+- `import/`: Contains the data imported from external sources (such as the `cabsec` dataset, packages, and models).
+- `flow/`: Contains the pipeline tasks that transform imported data and generate the HTML pages (`translate_`, `genSVG_`, `genSite_`).
+- `docs/`: Contains the exported static website deployed via GitHub Pages to https://ministry.orgpedia.in/.
+
+To preview the website locally:
+
+```bash
+cd docs/
+uv run python cors-server.py 8500
 ```
-
-After this you should have the data and software installed on your machine. The directory structure is as follows
-
-- `import/`: This contains all the data that is imported from outside, this primarily contains the `cabsec` data imported from `https://github.com/orgpedia/cabsec`
-
-- `flow/`: This directory cotains all the code that takes data from `import` and generates the html pages.
-
-- `export/`: This directory contains all the files required for the website (html, js, css and images). 
-
-You can start the webserver and explore the site by running the following command 
-
-```
-cd export/; 
-poetry run python cors-server.py 8500
-```
+Then navigate to `http://localhost:8500` in your browser.
 
 
 ## Build
 
-The repository contains generated html pages, so only if you have made any changes to the code you need to regenerate the pages, otherwise the repository is complete.
+The repository contains pre-generated HTML pages in `docs/`. You only need to regenerate pages if you modify pipeline code or templates.
 
-For example if you changed the CSS files then you need to do he following
+To run the entire pipeline and export the site:
 
+```bash
+make flow      # Execute all document flow tasks
+make export    # Export flow/genSite_/output into docs/
 ```
-poetry run task flow_genSite;
-poetry run task export;
+
+To run a specific flow task (e.g. site generation):
+
+```bash
+make flow/genSite_
 ```
 
-Exeute the command `poetry run task list` to see the comlete list of options available. All the commands are stored in `pyrpoject.toml`.
+To check formatting and linting:
 
+```bash
+make lint      # Run black and ruff check
+make format    # Auto-format with black and ruff
+```
 
-
-
-
+Run `make help` to view all available make targets.
